@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "148075.148159.PhonesCatalog.BLC/1.0.0": {
+        "dependencies": {
+          "148075.148159.PhonesCatalog.Core": "1.0.0",
+          "148075.148159.PhonesCatalog.Interfaces": "1.0.0"
+        },
+        "runtime": {
+          "148075.148159.PhonesCatalog.BLC.dll": {}
+        }
+      },
+      "148075.148159.PhonesCatalog.Core/1.0.0": {
+        "runtime": {
+          "148075.148159.PhonesCatalog.Core.dll": {}
+        }
+      },
+      "148075.148159.PhonesCatalog.Interfaces/1.0.0": {
+        "dependencies": {
+          "148075.148159.PhonesCatalog.Core": "1.0.0"
+        },
+        "runtime": {
+          "148075.148159.PhonesCatalog.Interfaces.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "148075.148159.PhonesCatalog.BLC/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "148075.148159.PhonesCatalog.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "148075.148159.PhonesCatalog.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

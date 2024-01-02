@@ -1,0 +1,11 @@
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\bin\Debug\net8.0\148075.148159.PhonesCatalog.Core.deps.json
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\bin\Debug\net8.0\148075.148159.PhonesCatalog.Core.dll
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\bin\Debug\net8.0\148075.148159.PhonesCatalog.Core.pdb
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.AssemblyInfoInputs.cache
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.AssemblyInfo.cs
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.csproj.CoreCompileInputs.cache
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.dll
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\refint\148075.148159.PhonesCatalog.Core.dll
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\148075.148159.PhonesCatalog.Core.pdb
+C:\Users\janog\source\repos\148075.148159.PhonesCatalog_Architektura\148075.148159.PhonesCatalog.Core\obj\Debug\net8.0\ref\148075.148159.PhonesCatalog.Core.dll
