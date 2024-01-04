@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>_148075._148159.PhonesCatalog.UI</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.BLC\148075.148159.PhonesCatalog.BLC.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.Core\148075.148159.PhonesCatalog.Core.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.DAOMock1\148075.148159.PhonesCatalog.DAOMock1.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.DAOMock2\148075.148159.PhonesCatalog.DAOMock2.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.Interfaces\148075.148159.PhonesCatalog.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
