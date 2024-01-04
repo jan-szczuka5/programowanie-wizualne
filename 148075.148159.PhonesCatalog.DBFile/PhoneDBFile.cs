@@ -1,16 +1,12 @@
 ﻿using _148075._148159.PhonesCatalog.Core;
 using _148075._148159.PhonesCatalog.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace _148075._148159.PhonesCatalog.DAOMock2.BO
+namespace _148075._148159.PhonesCatalog.DBFile
 {
-    public class Phone : IPhone
+    [Serializable]
+    internal class PhoneDBFile : IPhone
     {
-        public int ID { get; set ; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public IProducer Producer { get; set; }
         public int YearOfProduction { get; set; }

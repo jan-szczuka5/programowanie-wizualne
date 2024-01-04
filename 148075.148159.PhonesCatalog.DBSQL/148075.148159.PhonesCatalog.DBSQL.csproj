@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>_148075._148159.PhonesCatalog</RootNamespace>
+    <RootNamespace>_148075._148159.PhonesCatalog.DBSQL</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -19,12 +18,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\148075.148159.PhonesCatalog.BLC\148075.148159.PhonesCatalog.BLC.csproj" />
-    <ProjectReference Include="..\148075.148159.PhonesCatalog.Core\148075.148159.PhonesCatalog.Core.csproj" />
     <ProjectReference Include="..\148075.148159.PhonesCatalog.Interfaces\148075.148159.PhonesCatalog.Interfaces.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,9 @@
 ﻿using _148075._148159.PhonesCatalog.Interfaces;
 
-namespace _148075._148159.PhonesCatalog.DAOMock1.BO
+namespace _148075._148159.PhonesCatalog.DBFile
 {
-    public class Producer : IProducer
+    [Serializable]
+    internal class ProducerDBFile : IProducer
     {
         public int ID { get; set; }
         public string Name { get; set; }

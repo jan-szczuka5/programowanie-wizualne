@@ -2,14 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>_148075._148159.PhonesCatalog.BLC</RootNamespace>
+    <RootNamespace>_148075._148159.PhonesCatalog.DBFile</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\148075.148159.PhonesCatalog.Core\148075.148159.PhonesCatalog.Core.csproj" />
-    <ProjectReference Include="..\148075.148159.PhonesCatalog.DBSQL\148075.148159.PhonesCatalog.DBSQL.csproj" />
     <ProjectReference Include="..\148075.148159.PhonesCatalog.Interfaces\148075.148159.PhonesCatalog.Interfaces.csproj" />
   </ItemGroup>
 

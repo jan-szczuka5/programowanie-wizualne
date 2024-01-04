@@ -13,7 +13,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock1.BO
         public int ID { get; set ; }
         public string Name { get; set; }
         public IProducer Producer { get; set; }
-        public int YeadOfProduction { get; set; }
+        public int YearOfProduction { get; set; }
         public int AlreadySold { get; set; }
         public int Price { get; set; }
         public SoftwareType SoftwareType { get; set; }

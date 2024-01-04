@@ -10,7 +10,14 @@ namespace _148075._148159.PhonesCatalog.Interfaces
     {
         IEnumerable<IProducer> GetAllProducers();
         IEnumerable<IPhone> GetAllPhones();
-        IProducer CreateNewProducer();
-        IPhone CreateNewPhone();
+        IProducer CreateNewProducer(IProducer producer);
+        IPhone CreateNewPhone(IPhone phone);
+
+        void DeleteProducer(int producerId);
+
+        void DeletePhone(int phoneId);
+
+        void UpdateProducer(IProducer producer);
+        void UpdatePhone(IPhone phone);
     }
 }

@@ -17,7 +17,7 @@ namespace _148075._148159.PhonesCatalog
             Console.WriteLine("_____________________________________");
             foreach (IPhone p in blc.GetPhones())
             {
-                Console.WriteLine($"{p.ID}: {p.Name}, {p.YeadOfProduction}, {p.SoftwareType}");
+                Console.WriteLine($"{p.ID}: {p.Name}, {p.YearOfProduction}, {p.SoftwareType}");
             }
         }
     }

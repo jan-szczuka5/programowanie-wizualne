@@ -6,6 +6,6 @@ namespace _148075._148159.PhonesCatalog.DAOMock2.BO
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
     }
 }

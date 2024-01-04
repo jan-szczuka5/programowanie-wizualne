@@ -12,7 +12,7 @@ namespace _148075._148159.PhonesCatalog.Interfaces
         int ID { get; set; }
         string Name { get; set; }
         IProducer Producer { get; set; }
-        int YeadOfProduction { get; set; }
+        int YearOfProduction { get; set; }
         int AlreadySold { get; set; }
         int Price { get; set; }
         SoftwareType SoftwareType { get; set; }
