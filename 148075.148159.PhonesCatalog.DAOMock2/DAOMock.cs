@@ -11,7 +11,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
             {
                 producers = new List<IProducer>()
             {
-                new BO.Producer() { ID = 1, Name = "Xiaomi" },
+                new BO.Producer() { ID = 1, Name = "Xiaomi"},
                 new BO.Producer() { ID = 2, Name = "Sony" }
             };
                 phones = new List<IPhone>()

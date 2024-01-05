@@ -62,7 +62,7 @@
                         <TextBlock Margin="5" Padding="2">Search by:</TextBlock>
                         <ComboBox Margin="5" Padding="2" Name="searchTypeComboBox" MinWidth="100">
                             <ComboBoxItem Content="price" />
-                            <ComboBoxItem Content="model name" />
+                            <ComboBoxItem Content="phone name" />
                             <ComboBoxItem Content="software type" />
                             <ComboBoxItem Content="producer name" />
                             <ComboBoxItem Content="producer address" />
@@ -143,14 +143,14 @@
                                 <GridViewColumn Header="Producer name" Width="{Binding ElementName=ProducerNameColumnWidth, Path=Text}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Producer}" />
+                                            <TextBlock Text="{Binding ProducerName}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Producer address" Width="{Binding ElementName=ProducerAddressColumnWidth, Path=Text}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding ProducerName}" />
+                                            <TextBlock Text="{Binding ProducerAddress}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

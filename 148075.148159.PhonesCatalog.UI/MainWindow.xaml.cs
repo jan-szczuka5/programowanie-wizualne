@@ -40,6 +40,14 @@ namespace _148075._148159.PhonesCatalog.UI
             ProducerLVM.RefreshList(blc.GetProducers().Distinct());
             PhoneLVM.RefreshList(blc.GetPhones());
             InitializeComponent();
+            foreach (var phone in PhoneLVM.Phones)
+            {
+                PhoneList.Items.Add(phone);
+            }
+            foreach(var producer in ProducerLVM.Producers)
+            {
+                ProducerList.Items.Add(producer);
+            }
         }
         private void ApplyNewDataSource(object sender, RoutedEventArgs e)
         {
@@ -223,12 +231,22 @@ namespace _148075._148159.PhonesCatalog.UI
             if (softwareType == "")
             {
                 PhoneLVM.RefreshList(blc.GetPhones());
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
             }
             else
             {
                 SoftwareType type;
                 Enum.TryParse<SoftwareType>(softwareType, out type);
                 PhoneLVM.RefreshList(blc.FilterPhoneBySoftwareType(type));
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
             }
         }
 
@@ -237,10 +255,20 @@ namespace _148075._148159.PhonesCatalog.UI
             if (producer == "")
             {
                 PhoneLVM.RefreshList(blc.GetPhones());
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
             }
             else
             {
                 PhoneLVM.RefreshList(blc.FilterPhoneByProducer(producer));
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
             }
         }
 
@@ -280,6 +308,11 @@ namespace _148075._148159.PhonesCatalog.UI
 
                     PhoneLVM.RefreshList(blc.GetPhones());
                     ChangeSelectedPhone(null);
+                    PhoneList.Items.Clear();
+                    foreach (var phone in PhoneLVM.Phones)
+                    {
+                        PhoneList.Items.Add(phone);
+                    }
                 }
             }
             else
@@ -294,6 +327,11 @@ namespace _148075._148159.PhonesCatalog.UI
             {
                 blc.DeletePhone(selectedPhone.PhoneID);
                 PhoneLVM.RefreshList(blc.GetPhones());
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
                 selectedPhone = null;
             }
             else
@@ -320,7 +358,6 @@ namespace _148075._148159.PhonesCatalog.UI
                         Producer = blc.SearchProducerByName(phoneInputDialog.Producer).First(),
                         YearOfProduction = phoneInputDialog.PhoneYearOfProduction,
                         AlreadySold = phoneInputDialog.PhoneAlreadySold
-
                     };
                 }
                 catch
@@ -328,8 +365,14 @@ namespace _148075._148159.PhonesCatalog.UI
                     MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
                 blc.CreatePhone(phone);
                 PhoneLVM.RefreshList(blc.GetPhones());
+                PhoneList.Items.Clear();
+                foreach (var phoneitem in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phoneitem);
+                }// Refresh the PhoneLVM after adding a new phone
             }
         }
 
@@ -379,8 +422,13 @@ namespace _148075._148159.PhonesCatalog.UI
                     MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                blc.UpdateProducer(producer);
+                blc.CreateProducer(producer);
                 ProducerLVM.RefreshList(blc.GetProducers());
+                ProducerList.Items.Clear();
+                foreach (var produceritem in ProducerLVM.Producers)
+                {
+                    ProducerList.Items.Add(produceritem);
+                }
             }
         }
 
@@ -391,6 +439,11 @@ namespace _148075._148159.PhonesCatalog.UI
                 blc.DeleteProducer(selectedProducer.ProducerID);
                 ProducerLVM.RefreshList(blc.GetProducers());
                 selectedProducer = null;
+                ProducerList.Items.Clear();
+                foreach (var produceritem in ProducerLVM.Producers)
+                {
+                    ProducerList.Items.Add(produceritem);
+                }
             }
             else
             {
@@ -417,6 +470,11 @@ namespace _148075._148159.PhonesCatalog.UI
 
                     ProducerLVM.RefreshList(blc.GetProducers());
                     ChangeSelectedProducer(null);
+                    ProducerList.Items.Clear();
+                    foreach (var produceritem in ProducerLVM.Producers)
+                    {
+                        ProducerList.Items.Add(produceritem);
+                    }
                 }
             }
             else
