@@ -176,6 +176,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 case "producer name":
                     break;
                 case "producer address":
+                    FilterProducerByAddress(filterValue);
                     break;
                 default:
                     // Handle unexpected filter type, if necessary.
@@ -268,6 +269,28 @@ namespace _148075._148159.PhonesCatalog.UI
                 foreach (var phone in PhoneLVM.Phones)
                 {
                     PhoneList.Items.Add(phone);
+                }
+            }
+        }
+
+        private void FilterProducerByAddress(string address)
+        {
+            if (address == "")
+            {
+                ProducerLVM.RefreshList(blc.GetProducers());
+                ProducerList.Items.Clear();
+                foreach (var producer in ProducerLVM.Producers)
+                {
+                    ProducerList.Items.Add(producer);
+                }
+            }
+            else
+            {
+                ProducerLVM.RefreshList(blc.FilterProducerByAddress(address));
+                ProducerList.Items.Clear();
+                foreach (var producer in ProducerLVM.Producers)
+                {
+                    ProducerList.Items.Add(producer);
                 }
             }
         }
