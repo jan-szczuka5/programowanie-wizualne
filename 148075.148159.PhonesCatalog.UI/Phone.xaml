@@ -20,15 +20,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Name="question" Grid.Column="1">Provide new aircraft info:</Label>
-        <TextBox Name="phoneName" Margin="0,5,0,0" Grid.Column="1" Grid.Row="1" MinWidth="250">Model</TextBox>
+        <Label Name="question" Grid.Column="1">Provide new phone info:</Label>
+        <TextBox Name="phoneName" Margin="0,5,0,0" Grid.Column="1" Grid.Row="1" MinWidth="250">Name</TextBox>
         <ComboBox Name="softwareType" Margin="0,5,0,0" Grid.Column="1" Grid.Row="2">
 
         </ComboBox>
         <ComboBox Name="producer" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3" />
         <TextBox Name="phonePrice" Margin="0,5,0,0" Grid.Column="1" Grid.Row="4" MinWidth="250" PreviewTextInput="NumberValidationTextBox">100</TextBox>
+        <TextBox Name="phoneYearOfProduction" Margin="0,5,0,0" Grid.Column="1" Grid.Row="5" MinWidth="250" PreviewTextInput="NumberValidationTextBox">2024</TextBox>
+        <TextBox Name="phoneAlreadySold" Margin="0,5,0,0" Grid.Column="1" Grid.Row="6" MinWidth="250" PreviewTextInput="NumberValidationTextBox">1</TextBox>
 
-        <WrapPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+        <WrapPanel Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0" RenderTransformOrigin="0.504,2.267">
             <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Apply</Button>
             <Button IsCancel="True" MinWidth="60">_Cancel</Button>
         </WrapPanel>

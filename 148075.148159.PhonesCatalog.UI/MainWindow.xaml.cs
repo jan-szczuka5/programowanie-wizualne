@@ -8,6 +8,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _148075._148159.PhonesCatalog.Core;
+using _148075._148159.PhonesCatalog.Interfaces;
+using _148075._148159.PhonesCatalog.DAOMock1.BO;
+using _148075._148159.PhonesCatalog.DAOMock2;
+using _148075._148159.PhonesCatalog.BLC;
+
 
 namespace _148075._148159.PhonesCatalog.UI
 {
@@ -52,43 +58,35 @@ namespace _148075._148159.PhonesCatalog.UI
         }
 
         #region Filters
-        private void ApplyAircraftSearch(object sender, RoutedEventArgs e)
+        private void ApplyPhoneSearch(object sender, RoutedEventArgs e)
         {
-            // First, determine the selected filter type from the ComboBox.
             var selectedFilter = searchTypeComboBox.SelectedItem as ComboBoxItem;
 
             if (selectedFilter == null)
             {
-                // Handle the case where no filter is selected, if necessary.
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                PhoneLVM.RefreshList(blc.GetPhones());
             }
 
-            // Retrieve the filter value entered by the user.
-            string filterValue = aircraftSearchField.Text;
+            string filterValue = phoneSearchField.Text;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
-                // Handle the case where the filter value is empty, if necessary.
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                PhoneLVM.RefreshList(blc.GetPhones());
             }
 
-            // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
-                case "service hours":
-                    FilterByServiceHours(filterValue);
+                case "phone name":
                     break;
-                case "model name":
-                    FilterByModelName(filterValue);
+                case "software type":
+                    FilterPhoneBySoftwareType(filterValue);
                     break;
-                case "aircraft type":
-                    FilterByAircraftType(filterValue);
+                case "producer name":
+                    FilterPhoneByProducer(filterValue);
                     break;
-                case "airbase name":
-                    FilterByAirbases(filterValue);
+                case "producer address":
                     break;
-                case "airbase location":
-                    FilterByAirbasesLocation(filterValue);
+                case "price":
                     break;
                 default:
                     // Handle unexpected filter type, if necessary.
@@ -96,41 +94,39 @@ namespace _148075._148159.PhonesCatalog.UI
                     break;
             }
 
-            if (AircraftList.Items.Count > 0)
+            if (PhoneList.Items.Count > 0)
             {
-                AircraftList.SelectedItem = AircraftList.Items[0];
+                PhoneList.SelectedItem = PhoneList.Items[0];
 
             }
         }
 
-        private void ApplyAirbaseSearch(object sender, RoutedEventArgs e)
+        private void ApplyProducerSearch(object sender, RoutedEventArgs e)
         {
             // First, determine the selected filter type from the ComboBox.
-            var selectedFilter = airbasesearchTypeComboBox.SelectedItem as ComboBoxItem;
+            var selectedFilter = producersearchTypeComboBox.SelectedItem as ComboBoxItem;
 
             if (selectedFilter == null)
             {
                 // Handle the case where no filter is selected, if necessary.
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Retrieve the filter value entered by the user.
-            string filterValue = airbaseSearchField.Text;
+            string filterValue = producerSearchField.Text;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
                 // Handle the case where the filter value is empty, if necessary.
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
+               ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
-                case "airbase name":
-                    FilterAirbaseByName(filterValue);
+                case "producer name":
                     break;
-                case "airbase location":
-                    FilterAirbaseByLocation(filterValue);
+                case "producer address":
                     break;
                 default:
                     // Handle unexpected filter type, if necessary.
@@ -138,42 +134,40 @@ namespace _148075._148159.PhonesCatalog.UI
                     break;
             }
 
-            if (AirbaseList.Items.Count > 0)
+            if (ProducerList.Items.Count > 0)
             {
-                AirbaseList.SelectedItem = AirbaseList.Items[0];
+                ProducerList.SelectedItem = ProducerList.Items[0];
 
             }
         }
 
-        private void AirbaseApplyFilter(object sender, RoutedEventArgs e)
+        private void ProducerApplyFilter(object sender, RoutedEventArgs e)
         {
             // First, determine the selected filter type from the ComboBox.
-            var selectedFilter = airbasefilterTypeComboBox.SelectedItem as ComboBoxItem;
+            var selectedFilter = producerfilterTypeComboBox.SelectedItem as ComboBoxItem;
 
             if (selectedFilter == null)
             {
                 // Handle the case where no filter is selected, if necessary.
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Retrieve the filter value entered by the user.
-            string filterValue = airbasefilterValueTextBox.Text;
+            string filterValue = producerfilterValueTextBox.Text;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
                 // Handle the case where the filter value is empty, if necessary.
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
 
-                case "airbase name":
-                    FilterAirbaseByName(filterValue);
+                case "producer name":
                     break;
-                case "airbase location":
-                    FilterAirbaseByLocation(filterValue);
+                case "producer address":
                     break;
                 default:
                     // Handle unexpected filter type, if necessary.
@@ -190,7 +184,7 @@ namespace _148075._148159.PhonesCatalog.UI
             if (selectedFilter == null)
             {
                 // Handle the case where no filter is selected, if necessary.
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Retrieve the filter value entered by the user.
@@ -199,26 +193,23 @@ namespace _148075._148159.PhonesCatalog.UI
             if (string.IsNullOrWhiteSpace(filterValue))
             {
                 // Handle the case where the filter value is empty, if necessary.
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
-                case "service hours":
-                    FilterByServiceHours(filterValue);
+                case "phone name":
                     break;
-                case "model name":
-                    FilterByModelName(filterValue);
+                case "software type":
+                    FilterPhoneBySoftwareType(filterValue);
                     break;
-                case "aircraft type":
-                    FilterByAircraftType(filterValue);
+                case "producer name":
+                    FilterPhoneByProducer(filterValue);
                     break;
-                case "airbase name":
-                    FilterByAirbases(filterValue);
+                case "producer address":
                     break;
-                case "airbase location":
-                    FilterByAirbasesLocation(filterValue);
+                case "price":
                     break;
                 default:
                     // Handle unexpected filter type, if necessary.
@@ -227,163 +218,109 @@ namespace _148075._148159.PhonesCatalog.UI
             }
         }
 
-        private void FilterByServiceHours(string hours)
+        private void FilterPhoneBySoftwareType(string softwareType)
         {
-            if (hours == "")
+            if (softwareType == "")
             {
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                PhoneLVM.RefreshList(blc.GetPhones());
             }
             else
             {
-                AircraftLVM.RefreshList(blc.GetAircraft(Convert.ToInt32(hours)));
+                SoftwareType type;
+                Enum.TryParse<SoftwareType>(softwareType, out type);
+                PhoneLVM.RefreshList(blc.FilterPhoneBySoftwareType(type));
             }
         }
 
-        private void FilterByModelName(string modelName)
+        private void FilterPhoneByProducer(string producer)
         {
-            if (modelName == "")
+            if (producer == "")
             {
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                PhoneLVM.RefreshList(blc.GetPhones());
             }
             else
             {
-                AircraftLVM.RefreshList(blc.GetAircraftByModel(modelName));
+                PhoneLVM.RefreshList(blc.FilterPhoneByProducer(producer));
             }
         }
 
-        private void FilterByAircraftType(string modelType)
-        {
-            if (modelType == "")
-            {
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
-            }
-            else
-            {
-                AircraftType type;
-                Enum.TryParse<AircraftType>(modelType, out type);
-                AircraftLVM.RefreshList(blc.GetAircraft(type));
-            }
-        }
-
-        private void FilterByAirbases(string airbase)
-        {
-            if (airbase == "")
-            {
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
-            }
-            else
-            {
-                AircraftLVM.RefreshList(blc.GetAircraftByBaseName(airbase));
-            }
-        }
-
-        private void FilterByAirbasesLocation(string airbaseLocation)
-        {
-            if (airbaseLocation == "")
-            {
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
-            }
-            else
-            {
-                AircraftLVM.RefreshList(blc.GetAircraftByBaseLocation(airbaseLocation));
-            }
-        }
-
-        private void FilterAirbaseByName(string airbase)
-        {
-            if (airbase == "")
-            {
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
-            }
-            else
-            {
-                AirbaseLVM.RefreshList(blc.GetAirbaseByName(airbase));
-            }
-        }
-
-        private void FilterAirbaseByLocation(string airbaseLocation)
-        {
-            if (airbaseLocation == "")
-            {
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
-            }
-            else
-            {
-                AirbaseLVM.RefreshList(blc.GetAirbaseByLocation(airbaseLocation));
-            }
-        }
         #endregion
 
-        #region Aircraft operations
+        #region Phone operations
 
-        private void AircraftList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PhoneList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count != 0)
             {
-                ChangeSelectedAircraft((ViewModels.AircraftViewModel)e.AddedItems[0]);
+                ChangeSelectedPhone((ViewModels.PhoneViewModel)e.AddedItems[0]);
             }
         }
 
-        private void EditAircraft(object sender, RoutedEventArgs e)
+        private void EditPhone(object sender, RoutedEventArgs e)
         {
-            if (selectedAircraft != null)
+            if (selectedPhone != null)
             {
-                AircraftDialog aircraftEditDialog = new(
-                    blc.GetAllAirbasesNames(),
-                    blc.GetAircraft(selectedAircraft.AircraftGUID).First()
+                Phone phoneEditDialog = new(
+                    blc.GetAllPhonesNames(),
+                    blc.GetPhoneById(selectedPhone.PhoneID).First()
                 );
 
-                if (aircraftEditDialog.ShowDialog() == true)
+                if (phoneEditDialog.ShowDialog() == true)
                 {
-                    blc.CreateOrUpdateAircraft(new AircraftDBMock()
+                    blc.UpdatePhone(new DAOMock1.BO.Phone()
                     {
-                        GUID = selectedAircraft.AircraftGUID,
-                        Model = aircraftEditDialog.AircraftModel,
-                        Type = aircraftEditDialog.AirType,
-                        Airbase = blc.GetAirbaseByName(aircraftEditDialog.Airbase).First(),
-                        ServiceHours = aircraftEditDialog.AircraftServiceHours
+                        ID = selectedPhone.PhoneID,
+                        Name = phoneEditDialog.PhoneName,
+                        Producer = blc.SearchProducerByName(phoneEditDialog.Producer).First(),
+                        SoftwareType = phoneEditDialog.SoftType,
+                        Price = phoneEditDialog.PhonePrice,
+                        AlreadySold = phoneEditDialog.PhoneAlreadySold,
+                        YearOfProduction = phoneEditDialog.PhoneYearOfProduction
                     });
 
-                    AircraftLVM.RefreshList(blc.GetAllAircrafts());
-                    ChangeSelectedAircraft(null);
+                    PhoneLVM.RefreshList(blc.GetPhones());
+                    ChangeSelectedPhone(null);
                 }
             }
             else
             {
-                MessageBox.Show("Aircraft is not selected!");
+                MessageBox.Show("Phone is not selected!");
             }
         }
 
-        private void RemoveAircraft(object sender, RoutedEventArgs e)
+        private void RemovePhone(object sender, RoutedEventArgs e)
         {
-            if (selectedAircraft != null)
+            if (selectedPhone != null)
             {
-                blc.RemoveAircraft(selectedAircraft.AircraftGUID);
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
-                selectedAircraft = null;
+                blc.DeletePhone(selectedPhone.PhoneID);
+                PhoneLVM.RefreshList(blc.GetPhones());
+                selectedPhone = null;
             }
             else
             {
-                MessageBox.Show("Aircraft is not selected!");
+                MessageBox.Show("Phone is not selected!");
             }
         }
 
-        private void AddAircraft(object sender, RoutedEventArgs e)
+        private void AddPhone(object sender, RoutedEventArgs e)
         {
-            var allAirbasesNames = blc.GetAllAirbasesNames();
-            AircraftDialog aircraftInputDialog = new(allAirbasesNames);
+            var allPhonesNames = blc.GetAllPhonesNames();
+            Phone phoneInputDialog = new(allPhonesNames);
 
-            if (aircraftInputDialog.ShowDialog() == true)
+            if (phoneInputDialog.ShowDialog() == true)
             {
-                DBMock.AircraftDBMock aircraft;
+                DAOMock1.BO.Phone phone;
                 try
                 {
-                    aircraft = new AircraftDBMock()
+                    phone = new DAOMock1.BO.Phone()
                     {
-                        Model = aircraftInputDialog.AircraftModel,
-                        Airbase = blc.GetAirbaseByName(aircraftInputDialog.Airbase).First(),
-                        ServiceHours = aircraftInputDialog.AircraftServiceHours,
-                        Type = aircraftInputDialog.AirType
+                        Name = phoneInputDialog.PhoneName,
+                        Price = phoneInputDialog.PhonePrice,
+                        SoftwareType = phoneInputDialog.SoftType,
+                        Producer = blc.SearchProducerByName(phoneInputDialog.Producer).First(),
+                        YearOfProduction = phoneInputDialog.PhoneYearOfProduction,
+                        AlreadySold = phoneInputDialog.PhoneAlreadySold
+
                     };
                 }
                 catch
@@ -391,50 +328,50 @@ namespace _148075._148159.PhonesCatalog.UI
                     MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                blc.CreateOrUpdateAircraft(aircraft);
-                AircraftLVM.RefreshList(blc.GetAllAircrafts());
+                blc.CreatePhone(phone);
+                PhoneLVM.RefreshList(blc.GetPhones());
             }
         }
 
-        private void ChangeSelectedAircraft(ViewModels.AircraftViewModel aircraftViewModel)
+        private void ChangeSelectedPhone(ViewModels.PhoneViewModel phoneViewModel)
         {
-            selectedAircraft = aircraftViewModel;
-            DataContext = selectedAircraft;
+            selectedPhone = phoneViewModel;
+            DataContext = selectedPhone;
         }
 
         #endregion
 
-        #region Airbase operations
-        private void ChangeSelectedAirbase(ViewModels.AirbaseViewModel airbaseViewModel)
+        #region Producer operations
+        private void ChangeSelectedProducer(ViewModels.ProducerViewModel producerViewModel)
         {
-            selectedAirbase = airbaseViewModel;
-            DataContext = selectedAirbase;
+            selectedProducer = producerViewModel;
+            DataContext = selectedProducer;
         }
 
-        private void AirbaseList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ProducerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count != 0)
             {
-                ChangeSelectedAirbase((ViewModels.AirbaseViewModel)e.AddedItems[0]);
+                ChangeSelectedProducer((ViewModels.ProducerViewModel)e.AddedItems[0]);
             }
         }
 
 
 
-        private void AddAirbase(object sender, RoutedEventArgs e)
+        private void AddProducer(object sender, RoutedEventArgs e)
         {
-            var allAirbasesNames = blc.GetAllAirbasesNames();
-            AirbaseDialog airbaseDialog = new();
+            var allProducersNames = blc.GetAllProducersNames();
+            Producer producerDialog = new();
 
-            if (airbaseDialog.ShowDialog() == true)
+            if (producerDialog.ShowDialog() == true)
             {
-                DBMock.AirbaseDBMock airbase;
+                DAOMock1.BO.Producer producer;
                 try
                 {
-                    airbase = new AirbaseDBMock()
+                    producer = new DAOMock1.BO.Producer()
                     {
-                        Name = airbaseDialog.AirbaseName,
-                        Location = airbaseDialog.AirbaseLocation
+                        Name = producerDialog.ProducerName,
+                        Address = producerDialog.ProducerAddress
                     };
                 }
                 catch
@@ -442,49 +379,49 @@ namespace _148075._148159.PhonesCatalog.UI
                     MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                blc.CreateOrUpdateAirbase(airbase);
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
+                blc.UpdateProducer(producer);
+                ProducerLVM.RefreshList(blc.GetProducers());
             }
         }
 
-        private void RemoveAirbase(object sender, RoutedEventArgs e)
+        private void RemoveProducer(object sender, RoutedEventArgs e)
         {
-            if (selectedAirbase != null)
+            if (selectedProducer != null)
             {
-                blc.RemoveAirbase(selectedAirbase.AirbaseGUID);
-                AirbaseLVM.RefreshList(blc.GetAllAirbases());
-                selectedAirbase = null;
+                blc.DeleteProducer(selectedProducer.ProducerID);
+                ProducerLVM.RefreshList(blc.GetProducers());
+                selectedProducer = null;
             }
             else
             {
-                MessageBox.Show("Airbase is not selected!");
+                MessageBox.Show("Producer is not selected!");
             }
         }
 
-        private void EditAirbase(object sender, RoutedEventArgs e)
+        private void EditProducer(object sender, RoutedEventArgs e)
         {
-            if (selectedAirbase != null)
+            if (selectedProducer != null)
             {
-                AirbaseDialog airbaseDialog = new(
-                    blc.GetAirbase(selectedAirbase.AirbaseGUID).First()
+                Producer producerDialog = new(
+                    blc.GetProducerById(selectedProducer.ProducerID).First()
                 );
 
-                if (airbaseDialog.ShowDialog() == true)
+                if (producerDialog.ShowDialog() == true)
                 {
-                    blc.CreateOrUpdateAirbase(new AirbaseDBMock()
+                    blc.UpdateProducer(new DAOMock1.BO.Producer()
                     {
-                        GUID = selectedAirbase.AirbaseGUID,
-                        Name = airbaseDialog.AirbaseName,
-                        Location = airbaseDialog.AirbaseLocation
+                        ID = selectedProducer.ProducerID,
+                        Name = producerDialog.ProducerName,
+                        Address = producerDialog.ProducerAddress
                     });
 
-                    AirbaseLVM.RefreshList(blc.GetAllAirbases());
-                    ChangeSelectedAirbase(null);
+                    ProducerLVM.RefreshList(blc.GetProducers());
+                    ChangeSelectedProducer(null);
                 }
             }
             else
             {
-                MessageBox.Show("Airbase is not selected!");
+                MessageBox.Show("Producer is not selected!");
             }
         }
         #endregion

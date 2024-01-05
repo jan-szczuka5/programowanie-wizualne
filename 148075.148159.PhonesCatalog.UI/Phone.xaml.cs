@@ -101,6 +101,22 @@ namespace _148075._148159.PhonesCatalog.UI
             }
         }
 
+        public int PhoneYearOfProduction
+        {
+            get
+            {
+                return int.Parse(phoneYearOfProduction.Text);
+            }
+        }
+
+        public int PhoneAlreadySold
+        {
+            get
+            {
+                return int.Parse(phoneAlreadySold.Text);
+            }
+        }
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new("[^0-9]+");

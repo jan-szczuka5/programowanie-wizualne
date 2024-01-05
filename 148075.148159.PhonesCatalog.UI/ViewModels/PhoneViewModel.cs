@@ -19,13 +19,12 @@ namespace _148075._148159.PhonesCatalog.UI.ViewModels
             this.phone = phone;
         }
 
-        public string PhoneID
+        public int PhoneID
         {
-            get => phone.ID.ToString();
+            get => phone.ID;
             set
             {
-                int.TryParse(value, out int parsedID);
-                phone.ID = parsedID;
+                phone.ID = value;
                 RaisePropertyChanged(nameof(PhoneID));
             }
         }
@@ -59,6 +58,22 @@ namespace _148075._148159.PhonesCatalog.UI.ViewModels
                 RaisePropertyChanged(nameof(SoftwareType));
             }
         }
+
+        public int PhoneYearOfProduction { 
+            get => phone.YearOfProduction;
+            set
+            {
+                phone.YearOfProduction = value;
+                RaisePropertyChanged(nameof(PhoneYearOfProduction));
+            }
+        }
+        public int PhoneAlreadySold { 
+            get => phone.AlreadySold;
+            set 
+            {
+                phone.AlreadySold = value;
+                RaisePropertyChanged(nameof(PhoneAlreadySold));
+            } }
 
         public string PhoneProducer
         {

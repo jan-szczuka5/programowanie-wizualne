@@ -19,13 +19,12 @@ namespace _148075._148159.PhonesCatalog.UI.ViewModels
             this.producer = producer;
         }
 
-        public string ProducerID
+        public int ProducerID
         {
-            get => producer.ID.ToString();
+            get => producer.ID;
             set
             {
-                int.TryParse(value, out int parsedID);
-                producer.ID = parsedID;
+                producer.ID = value;
                 RaisePropertyChanged(nameof(ProducerID));
             }
         }

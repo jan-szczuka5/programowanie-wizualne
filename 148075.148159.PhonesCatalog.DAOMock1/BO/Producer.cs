@@ -2,6 +2,7 @@
 
 namespace _148075._148159.PhonesCatalog.DAOMock1.BO
 {
+    [Serializable]
     public class Producer : IProducer
     {
         public int ID { get; set; }

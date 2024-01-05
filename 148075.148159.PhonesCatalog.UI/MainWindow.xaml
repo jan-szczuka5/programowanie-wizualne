@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl>
-            <TabItem Header="Aircrafts" HorizontalAlignment="Left" Width="56">
+            <TabItem Header="Phones" HorizontalAlignment="Left" Width="56">
                 <StackPanel Margin="10,0,10,0">
                     <TextBlock>
                         <Run Text="ID: " FontWeight="Bold"/>
@@ -17,6 +17,10 @@
                     <TextBlock >
                         <Run Text="Name: " FontWeight="Bold"/>
                         <Run Text="{Binding PhoneName}"/>
+                    </TextBlock>
+                    <TextBlock >
+                        <Run Text="Year of production: " FontWeight="Bold"/>
+                        <Run Text="{Binding YearOfProduction}"/>
                     </TextBlock>
                     <TextBlock >
                         <Run Text="Software Type: " FontWeight="Bold"/>
@@ -46,7 +50,7 @@
                         <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
                         <ComboBox Margin="5" Padding="2" Name="filterTypeComboBox" MinWidth="100">
                             <ComboBoxItem Content="price" />
-                            <ComboBoxItem Content="model name" />
+                            <ComboBoxItem Content="phone name" />
                             <ComboBoxItem Content="software type" />
                             <ComboBoxItem Content="producer name" />
                             <ComboBoxItem Content="producer address" />
@@ -63,21 +67,21 @@
                             <ComboBoxItem Content="producer name" />
                             <ComboBoxItem Content="producer address" />
                         </ComboBox>
-                        <TextBox Margin="5" Padding="2" Name="aircraftSearchField" MinWidth="100"/>
+                        <TextBox Margin="5" Padding="2" Name="phoneSearchField" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ApplyPhoneSearch">Search</Button>
                     </StackPanel>
 
                     <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="300">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Model name" Width="{Binding ElementName=ModelNameColumnWidth, Path=Text}">
+                                <GridViewColumn Header="Phone name" Width="{Binding ElementName=PhoneNameColumnWidth, Path=Text}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PhoneName}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Base location" Width="{Binding ElementName=BaseLocationColumnWidth, Path=Text}">
+                                <GridViewColumn Header="Producer name" Width="{Binding ElementName=ProducerNameColumnWidth, Path=Text}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PhoneProducer}" />
@@ -87,14 +91,14 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Name="AirBaseModelNameColumnWidth" Visibility="Collapsed" Text="150" />
+                    <TextBox Name="PhoneNameColumnWidth" Visibility="Collapsed" Text="150" />
                     <!-- Hidden TextBox to bind width -->
-                    <TextBox Name="AirBaseBaseLocationColumnWidth" Visibility="Collapsed" Text="150" />
+                    <TextBox Name="ProducerNameColumnWidth" Visibility="Collapsed" Text="150" />
                     <!-- Hidden TextBox to bind width -->
 
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Airbases">
+            <TabItem Header="Producers">
                 <StackPanel Margin="10,0,10,0">
                     <TextBlock>
                         <Run Text="ID: " FontWeight="Bold"/>
@@ -109,9 +113,9 @@
                         <Run Text="{Binding ProducerAddress}"/>
                     </TextBlock>
 
-                    <Button Margin="0,0,0,5" Click="EditAirbase">Edit selected producer</Button>
-                    <Button Margin="0,0,0,5" Click="RemoveAirbase">Remove selected producer</Button>
-                    <Button Margin="0,0,0,5" Click="AddAirbase">Add new producer</Button>
+                    <Button Margin="0,0,0,5" Click="EditProducer">Edit selected producer</Button>
+                    <Button Margin="0,0,0,5" Click="RemoveProducer">Remove selected producer</Button>
+                    <Button Margin="0,0,0,5" Click="AddProducer">Add new producer</Button>
 
 
                     <StackPanel Orientation="Horizontal">
@@ -136,7 +140,14 @@
                     <ListView Margin="0,5,0,10" Name="ProducerList" SelectionChanged="ProducerList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=ProducerLVM.Producers}" Height="300">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Address" Width="{Binding ElementName=BaseLocationColumnWidth, Path=Text}">
+                                <GridViewColumn Header="Producer name" Width="{Binding ElementName=ProducerNameColumnWidth, Path=Text}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Producer}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Producer address" Width="{Binding ElementName=ProducerAddressColumnWidth, Path=Text}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding ProducerName}" />
@@ -146,9 +157,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Name="BaseLocationColumnWidth" Visibility="Collapsed" Text="150" />
+                    <TextBox Name="ProducerAddressColumnWidth" Visibility="Collapsed" Text="150" />
                     <!-- Hidden TextBox to bind width -->
-
                 </StackPanel>
             </TabItem>
 

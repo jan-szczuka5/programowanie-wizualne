@@ -97,6 +97,10 @@ namespace _148075._148159.PhonesCatalog.BLC
             return dao.GetAllPhones().Where(phone => phone.ID.Equals(phoneId));
         }
 
+        public IEnumerable<string> GetAllPhonesNames() => from phone in dao.GetAllProducers() select phone.Name;
+
+        public IEnumerable<string> GetAllProducersNames() => from producer in dao.GetAllProducers() select producer.Name;
+
         public void CreatePhone(IPhone phone)
         {
             dao.CreateNewPhone(phone);

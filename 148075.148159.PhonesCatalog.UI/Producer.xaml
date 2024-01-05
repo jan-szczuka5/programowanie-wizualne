@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <Label Name="questionName" Grid.Column="1">Provide new producer name:</Label>
-        <TextBox Name="producerName" Margin="0,5,0,0" Grid.Column="1" Grid.Row="1" MinWidth="250" TextChanged="producerName_TextChanged">Name</TextBox>
+        <TextBox Name="producerName" Margin="0,5,0,0" Grid.Column="1" Grid.Row="1" MinWidth="250">Name</TextBox>
 
         <Label Name="questionLocation" Grid.Column="1" Grid.Row="2">Provide new producer location:</Label>
         <TextBox Name="producerAddress" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3" MinWidth="250">Location</TextBox>
