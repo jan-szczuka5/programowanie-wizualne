@@ -438,11 +438,17 @@ namespace _148075._148159.PhonesCatalog.UI
             {
                 blc.DeleteProducer(selectedProducer.ProducerID);
                 ProducerLVM.RefreshList(blc.GetProducers());
+                PhoneLVM.RefreshList(blc.GetPhones());
                 selectedProducer = null;
                 ProducerList.Items.Clear();
                 foreach (var produceritem in ProducerLVM.Producers)
                 {
                     ProducerList.Items.Add(produceritem);
+                }
+                PhoneList.Items.Clear();
+                foreach (var phoneitem in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phoneitem);
                 }
             }
             else
@@ -471,10 +477,10 @@ namespace _148075._148159.PhonesCatalog.UI
                     ProducerLVM.RefreshList(blc.GetProducers());
                     ChangeSelectedProducer(null);
                     ProducerList.Items.Clear();
-                    foreach (var produceritem in ProducerLVM.Producers)
-                    {
-                        ProducerList.Items.Add(produceritem);
-                    }
+                foreach (var produceritem in ProducerLVM.Producers)
+                {
+                    ProducerList.Items.Add(produceritem);
+                }
                 }
             }
             else

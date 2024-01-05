@@ -63,6 +63,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
         public void DeleteProducer(int producerId)
         {
             IProducer producerDelete = producers.First(producer => producer.ID.Equals(producerId));
+            List<IPhone> phonesToDelete = phones.Where(phone => phone.Producer.ID.Equals(producerId)).ToList();
+            foreach (IPhone phone in phonesToDelete)
+            {
+                phones.Remove(phone);
+            }
             producers.Remove(producerDelete);
         }
 
