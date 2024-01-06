@@ -141,11 +141,14 @@ namespace _148075._148159.PhonesCatalog.BLC
             return dao.GetAllPhones().Where(phone => phone.SoftwareType.Equals(softwareType));
         }
 
+        public IEnumerable<IPhone> FilterPhoneByYear(int yearOfProduction)
+        {
+            return dao.GetAllPhones().Where(phone => phone.YearOfProduction.Equals(yearOfProduction));
+        }
         public IEnumerable<IProducer> FilterProducerByAddress(string address)
         {
             return dao.GetAllProducers().Where(producer => producer.Address.Equals(address));
         }
-
         public IEnumerable<IPhone> SearchPhoneByName(string phoneName)
         {
             return dao.GetAllPhones().Where(phone => phone.Name.Contains(phoneName));

@@ -20,7 +20,7 @@
                     </TextBlock>
                     <TextBlock >
                         <Run Text="Year of production: " FontWeight="Bold"/>
-                        <Run Text="{Binding YearOfProduction}"/>
+                        <Run Text="{Binding PhoneYearOfProduction}"/>
                     </TextBlock>
                     <TextBlock >
                         <Run Text="Software Type: " FontWeight="Bold"/>
@@ -34,10 +34,7 @@
                         <Run Text="Producer name: " FontWeight="Bold"/>
                         <Run Text="{Binding PhoneProducer}"/>
                     </TextBlock>
-                    <TextBlock >
-                        <Run Text="Producer address: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhoneProducerAddress}"/>
-                    </TextBlock>
+
                     <Button Margin="0,0,0,5" Click="EditPhone">Edit selected phone</Button>
                     <Button Margin="0,0,0,5" Click="RemovePhone">Remove selected phone</Button>
                     <Button Margin="0,0,0,5" Click="AddPhone">Add new phone</Button>
@@ -54,6 +51,7 @@
                             <ComboBoxItem Content="software type" />
                             <ComboBoxItem Content="producer name" />
                             <ComboBoxItem Content="producer address" />
+                            <ComboBoxItem Content="year of production" />
                         </ComboBox>
                         <TextBox Margin="5" Padding="2" Name="filterValueTextBox" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ApplyFilter">Apply filter</Button>
@@ -65,13 +63,13 @@
                             <ComboBoxItem Content="phone name" />
                             <ComboBoxItem Content="software type" />
                             <ComboBoxItem Content="producer name" />
-                            <ComboBoxItem Content="producer address" />
+                            <ComboBoxItem Content="year of production" />
                         </ComboBox>
                         <TextBox Margin="5" Padding="2" Name="phoneSearchField" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ApplyPhoneSearch">Search</Button>
                     </StackPanel>
 
-                    <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="300">
+                    <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="150">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Phone name" Width="{Binding ElementName=PhoneNameColumnWidth, Path=Text}">

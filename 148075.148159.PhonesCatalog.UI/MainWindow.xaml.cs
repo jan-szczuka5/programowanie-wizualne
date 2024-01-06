@@ -220,6 +220,9 @@ namespace _148075._148159.PhonesCatalog.UI
                     break;
                 case "price":
                     break;
+                case "year of production":
+                    FilterPhoneByYear(filterValue);
+                    break;
                 default:
                     // Handle unexpected filter type, if necessary.
                     MessageBox.Show("Unknown filter type selected.");
@@ -291,6 +294,29 @@ namespace _148075._148159.PhonesCatalog.UI
                 foreach (var producer in ProducerLVM.Producers)
                 {
                     ProducerList.Items.Add(producer);
+                }
+            }
+        }
+
+        private void FilterPhoneByYear(string yearOfProduction)
+        {
+            if (yearOfProduction == "")
+            {
+                PhoneLVM.RefreshList(blc.GetPhones());
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
+                }
+            }
+            else
+            {
+                int.TryParse(yearOfProduction, out int year);
+                PhoneLVM.RefreshList(blc.FilterPhoneByYear(year));
+                PhoneList.Items.Clear();
+                foreach (var phone in PhoneLVM.Phones)
+                {
+                    PhoneList.Items.Add(phone);
                 }
             }
         }
