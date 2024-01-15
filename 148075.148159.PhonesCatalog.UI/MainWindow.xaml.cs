@@ -388,7 +388,10 @@ namespace _148075._148159.PhonesCatalog.UI
                 MessageBox.Show("Phone is not selected!");
             }
         }
-
+        private int GetMaxPhoneId()
+        {
+            return PhoneLVM.Phones.Max(p => p.PhoneID);
+        }
         private void AddPhone(object sender, RoutedEventArgs e)
         {
             var allPhonesNames = blc.GetAllPhonesNames();
@@ -399,8 +402,11 @@ namespace _148075._148159.PhonesCatalog.UI
                 DAOMock1.BO.Phone phone;
                 try
                 {
+                    int newId = GetMaxPhoneId() + 1;
+
                     phone = new DAOMock1.BO.Phone()
                     {
+                        ID = newId,
                         Name = phoneInputDialog.PhoneName,
                         Price = phoneInputDialog.PhonePrice,
                         SoftwareType = phoneInputDialog.SoftType,
@@ -448,7 +454,10 @@ namespace _148075._148159.PhonesCatalog.UI
             }
         }
 
-
+        private int GetMaxProducerId()
+        {
+            return ProducerLVM.Producers.Max(p => p.ProducerID);
+        }
 
         private void AddProducer(object sender, RoutedEventArgs e)
         {
@@ -460,8 +469,10 @@ namespace _148075._148159.PhonesCatalog.UI
                 DAOMock1.BO.Producer producer;
                 try
                 {
+                    int newId = GetMaxProducerId() + 1;
                     producer = new DAOMock1.BO.Producer()
                     {
+                        ID = newId,
                         Name = producerDialog.ProducerName,
                         Address = producerDialog.ProducerAddress
                     };
