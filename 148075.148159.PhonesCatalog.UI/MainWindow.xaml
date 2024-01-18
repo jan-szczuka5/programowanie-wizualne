@@ -6,70 +6,49 @@
         xmlns:local="clr-namespace:_148075._148159.PhonesCatalog.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Phones" HorizontalAlignment="Left" Width="56">
-                <StackPanel Margin="10,0,10,0">
-                    <TextBlock>
-                        <Run Text="ID: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhoneID}"/>
-                    </TextBlock>
-                    <TextBlock >
-                        <Run Text="Name: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhoneName}"/>
-                    </TextBlock>
-                    <TextBlock >
-                        <Run Text="Year of production: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhoneYearOfProduction}"/>
-                    </TextBlock>
-                    <TextBlock >
-                        <Run Text="Software Type: " FontWeight="Bold"/>
-                        <Run Text="{Binding SoftwareType}"/>
-                    </TextBlock>
-                    <TextBlock >
-                        <Run Text="Price: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhonePrice}"/>
-                    </TextBlock>
-                    <TextBlock >
-                        <Run Text="Producer name: " FontWeight="Bold"/>
-                        <Run Text="{Binding PhoneProducer}"/>
-                    </TextBlock>
+    <TabControl>
+        <TabItem Header="Phones">
 
-                    <Button Margin="0,0,0,5" Click="EditPhone">Edit selected phone</Button>
-                    <Button Margin="0,0,0,5" Click="RemovePhone">Remove selected phone</Button>
-                    <Button Margin="0,0,0,5" Click="AddPhone">Add new phone</Button>
+
+            <DockPanel LastChildFill="True">
+
+                <!-- Filters/Search Section (Top) -->
+                <StackPanel DockPanel.Dock="Top" Margin="10,5,10,5">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5" Padding="2">Data source (.dll):</TextBlock>
                         <TextBox Margin="5" Padding="2" Name="datasource" MinWidth="100">148075.148159.PhonesCatalog.DAOMock1.dll</TextBox>
                         <Button Margin="5" Padding="2" Click="ApplyNewDataSource">Apply</Button>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
-                        <ComboBox Margin="5" Padding="2" Name="filterTypeComboBox" MinWidth="100">
-                            <ComboBoxItem Content="price" />
-                            <ComboBoxItem Content="phone name" />
-                            <ComboBoxItem Content="software type" />
-                            <ComboBoxItem Content="producer name" />
-                            <ComboBoxItem Content="producer address" />
-                            <ComboBoxItem Content="year of production" />
-                        </ComboBox>
-                        <TextBox Margin="5" Padding="2" Name="filterValueTextBox" MinWidth="100"/>
-                        <Button Margin="5" Padding="2" Click="ApplyFilter">Apply filter</Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Padding="2">Search by:</TextBlock>
-                        <ComboBox Margin="5" Padding="2" Name="searchTypeComboBox" MinWidth="100">
-                            <ComboBoxItem Content="price" />
-                            <ComboBoxItem Content="phone name" />
-                            <ComboBoxItem Content="software type" />
-                            <ComboBoxItem Content="producer name" />
-                            <ComboBoxItem Content="year of production" />
-                        </ComboBox>
-                        <TextBox Margin="5" Padding="2" Name="phoneSearchField" MinWidth="100"/>
-                        <Button Margin="5" Padding="2" Click="ApplyPhoneSearch">Search</Button>
+                    <!-- Filters/Search Section (Top) -->
+                    <StackPanel DockPanel.Dock="Top" Margin="0" Orientation="Horizontal">
+                        <!-- Filter Section -->
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
+                            <ComboBox Margin="5" Padding="2" Name="filterTypeComboBox" MinWidth="100" SelectionChanged="FilterTypeComboBox_SelectionChanged">
+                                <ComboBoxItem Content="software type" />
+                                <ComboBoxItem Content="producer name" />
+                                <ComboBoxItem Content="year of production" />
+                            </ComboBox>
+                            <ComboBox Margin="5" Padding="2" Name="filterValueComboBox" MinWidth="100"/>
+                            <Button Margin="5" Padding="2" Click="PhoneApplyFilter">Apply filter</Button>
+                        </StackPanel>
+
+                        <!-- Search Section -->
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <TextBlock Margin="5" Padding="2">Search phone by name:</TextBlock>
+                            <TextBox Margin="5" Padding="2" Name="phoneSearchField" MinWidth="100"/>
+                            <Button Margin="5" Padding="2" Click="ApplyPhoneSearch">Search</Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Button Margin="5" Padding="2" Click="RemoveFiltersPhone">Remove filters</Button>
+                        </StackPanel>
                     </StackPanel>
 
-                    <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="150">
+                </StackPanel>
+
+                <!-- ListView Section (Left) -->
+                <StackPanel DockPanel.Dock="Left" Margin="10">
+                    <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="249" Width="533">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Phone name" Width="{Binding ElementName=PhoneNameColumnWidth, Path=Text}">
@@ -89,53 +68,79 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Name="PhoneNameColumnWidth" Visibility="Collapsed" Text="150" />
-                    <!-- Hidden TextBox to bind width -->
-                    <TextBox Name="ProducerNameColumnWidth" Visibility="Collapsed" Text="150" />
-                    <!-- Hidden TextBox to bind width -->
-
                 </StackPanel>
-            </TabItem>
-            <TabItem Header="Producers">
-                <StackPanel Margin="10,0,10,0">
+
+                <!-- Details Section (Right) -->
+                <StackPanel DockPanel.Dock="Right" Margin="10" Width="200">
                     <TextBlock>
-                        <Run Text="ID: " FontWeight="Bold"/>
-                        <Run Text="{Binding ProducerID}"/>
+                <Run Text="ID: " FontWeight="Bold"/>
+                <Run Text="{Binding PhoneID}"/>
                     </TextBlock>
                     <TextBlock >
-                        <Run Text="Name: " FontWeight="Bold"/>
-                        <Run Text="{Binding ProducerName}"/>
+                <Run Text="Name: " FontWeight="Bold"/>
+                <Run Text="{Binding PhoneName}"/>
                     </TextBlock>
                     <TextBlock >
-                        <Run Text="Address: " FontWeight="Bold"/>
-                        <Run Text="{Binding ProducerAddress}"/>
+                <Run Text="Year of production: " FontWeight="Bold"/>
+                <Run Text="{Binding PhoneYearOfProduction}"/>
+                    </TextBlock>
+                    <TextBlock >
+                <Run Text="Software Type: " FontWeight="Bold"/>
+                <Run Text="{Binding SoftwareType}"/>
+                    </TextBlock>
+                    <TextBlock >
+                <Run Text="Price: " FontWeight="Bold"/>
+                <Run Text="{Binding PhonePrice}"/>
+                    </TextBlock>
+                    <TextBlock >
+                <Run Text="Producer name: " FontWeight="Bold"/>
+                <Run Text="{Binding PhoneProducer}"/>
                     </TextBlock>
 
-                    <Button Margin="0,0,0,5" Click="EditProducer">Edit selected producer</Button>
-                    <Button Margin="0,0,0,5" Click="RemoveProducer">Remove selected producer</Button>
-                    <Button Margin="0,0,0,5" Click="AddProducer">Add new producer</Button>
+                    <Button Margin="0,5,0,5" MaxWidth="160"  Click="EditPhone">Edit selected phone</Button>
+                    <Button Margin="0,0,0,5" MaxWidth="160" Click="RemovePhone">Remove selected phone</Button>
+                    <Button Margin="0,0,0,5" MaxWidth="160" Click="AddPhone">Add new phone</Button>
+                </StackPanel>
+            </DockPanel>
+        </TabItem>
+        <!-- Producers Tab -->
+        <TabItem Header="Producers">
+            <DockPanel LastChildFill="True">
+                <!-- Filters/Search Section (Top) for Producers -->
 
 
-                    <StackPanel Orientation="Horizontal">
+
+                <StackPanel DockPanel.Dock="Top" Margin="0,10" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
                         <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
-                        <ComboBox Margin="5" Padding="2" Name="producerfilterTypeComboBox" MinWidth="100">
+                        <ComboBox Margin="5" Padding="2" Name="producerfilterTypeComboBox" MinWidth="100" >
                             <ComboBoxItem Content="producer name" />
                             <ComboBoxItem Content="producer address" />
                         </ComboBox>
                         <TextBox Margin="5" Padding="2" Name="producerfilterValueTextBox" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ProducerApplyFilter">Apply filter</Button>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Padding="2">Search by:</TextBlock>
-                        <ComboBox Margin="5" Padding="2" Name="producersearchTypeComboBox" MinWidth="100">
-                            <ComboBoxItem Content="producer name" />
-                            <ComboBoxItem Content="producer address" />
-                        </ComboBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
+                        <TextBlock Margin="5" Padding="2">Search producer by name:</TextBlock>
                         <TextBox Margin="5" Padding="2" Name="producerSearchField" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ApplyProducerSearch">Search</Button>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
+                        <Button Margin="5" Padding="2" Click="RemoveFiltersProducer">Remove filters</Button>
+                    </StackPanel>
+                </StackPanel>
 
-                    <ListView Margin="0,5,0,10" Name="ProducerList" SelectionChanged="ProducerList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=ProducerLVM.Producers}" Height="300">
+                <!-- ListView Section (Left) for Producers -->
+                <StackPanel DockPanel.Dock="Left" Margin="10">
+                    <ListView Margin="0,5,0,10" Name="ProducerList" SelectionChanged="ProducerList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=ProducerLVM.Producers}" Height="249" Width="521" RenderTransformOrigin="0.5,0.5">
+                        <ListView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="0"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0"/>
+                            </TransformGroup>
+                        </ListView.RenderTransform>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Producer name" Width="{Binding ElementName=ProducerNameColumnWidth, Path=Text}">
@@ -155,11 +160,29 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Name="ProducerAddressColumnWidth" Visibility="Collapsed" Text="150" />
-                    <!-- Hidden TextBox to bind width -->
                 </StackPanel>
-            </TabItem>
 
-        </TabControl>
-    </Grid>
+                <!-- Details Section (Right) for Producers -->
+                <StackPanel DockPanel.Dock="Right" Margin="10" Width="200" Height="221">
+                    <TextBlock>
+                <Run Text="ID: " FontWeight="Bold"/>
+                <Run Text="{Binding ProducerID}"/>
+                    </TextBlock>
+                    <TextBlock >
+                <Run Text="Name: " FontWeight="Bold"/>
+                <Run Text="{Binding ProducerName}"/>
+                    </TextBlock>
+                    <TextBlock >
+                <Run Text="Address: " FontWeight="Bold"/>
+                <Run Text="{Binding ProducerAddress}"/>
+                    </TextBlock>
+
+                    <Button Margin="0,5,0,5" Click="EditProducer">Edit selected producer</Button>
+                    <Button Margin="0,0,0,5" Click="RemoveProducer">Remove selected producer</Button>
+                    <Button Margin="0,0,0,5" Click="AddProducer">Add new producer</Button>
+                </StackPanel>
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
 </Window>

@@ -68,85 +68,55 @@ namespace _148075._148159.PhonesCatalog.UI
         #region Filters
         private void ApplyPhoneSearch(object sender, RoutedEventArgs e)
         {
-            var selectedFilter = searchTypeComboBox.SelectedItem as ComboBoxItem;
-
-            if (selectedFilter == null)
-            {
-                PhoneLVM.RefreshList(blc.GetPhones());
-            }
 
             string filterValue = phoneSearchField.Text;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
                 PhoneLVM.RefreshList(blc.GetPhones());
+                return;
             }
 
-            switch (selectedFilter.Content.ToString())
-            {
-                case "phone name":
-                    break;
-                case "software type":
-                    FilterPhoneBySoftwareType(filterValue);
-                    break;
-                case "producer name":
-                    FilterPhoneByProducer(filterValue);
-                    break;
-                case "producer address":
-                    break;
-                case "price":
-                    break;
-                default:
-                    // Handle unexpected filter type, if necessary.
-                    MessageBox.Show("Unknown filter type selected.");
-                    break;
-            }
-
+            PhoneLVM.RefreshList(blc.SearchPhoneByName(filterValue));
+/*
             if (PhoneList.Items.Count > 0)
             {
                 PhoneList.SelectedItem = PhoneList.Items[0];
 
+            }*/
+
+            PhoneList.Items.Clear();
+            foreach (var phone in PhoneLVM.Phones)
+            {
+                PhoneList.Items.Add(phone);
             }
         }
 
         private void ApplyProducerSearch(object sender, RoutedEventArgs e)
         {
-            // First, determine the selected filter type from the ComboBox.
-            var selectedFilter = producersearchTypeComboBox.SelectedItem as ComboBoxItem;
-
-            if (selectedFilter == null)
-            {
-                // Handle the case where no filter is selected, if necessary.
-                ProducerLVM.RefreshList(blc.GetProducers());
-            }
-
-            // Retrieve the filter value entered by the user.
+            
             string filterValue = producerSearchField.Text;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
-                // Handle the case where the filter value is empty, if necessary.
                ProducerLVM.RefreshList(blc.GetProducers());
+                return;
             }
 
-            // Apply the filter based on the selected filter type.
-            switch (selectedFilter.Content.ToString())
+            ProducerLVM.RefreshList(blc.SearchProducerByName(filterValue));
+
+            /*            if (ProducerList.Items.Count > 0)
+                        {
+                            ProducerList.SelectedItem = ProducerList.Items[0];
+
+                        }*/
+
+            ProducerList.Items.Clear();
+            foreach (var producer in ProducerLVM.Producers)
             {
-                case "producer name":
-                    break;
-                case "producer address":
-                    break;
-                default:
-                    // Handle unexpected filter type, if necessary.
-                    MessageBox.Show("Unknown filter type selected.");
-                    break;
+                ProducerList.Items.Add(producer);
             }
 
-            if (ProducerList.Items.Count > 0)
-            {
-                ProducerList.SelectedItem = ProducerList.Items[0];
-
-            }
         }
 
         private void ProducerApplyFilter(object sender, RoutedEventArgs e)
@@ -185,7 +155,7 @@ namespace _148075._148159.PhonesCatalog.UI
             }
         }
 
-        private void ApplyFilter(object sender, RoutedEventArgs e)
+        private void PhoneApplyFilter(object sender, RoutedEventArgs e)
         {
             // First, determine the selected filter type from the ComboBox.
             var selectedFilter = filterTypeComboBox.SelectedItem as ComboBoxItem;
@@ -193,38 +163,31 @@ namespace _148075._148159.PhonesCatalog.UI
             if (selectedFilter == null)
             {
                 // Handle the case where no filter is selected, if necessary.
-                ProducerLVM.RefreshList(blc.GetProducers());
+                PhoneLVM.RefreshList(blc.GetPhones());
+                return;
             }
 
             // Retrieve the filter value entered by the user.
-            string filterValue = filterValueTextBox.Text;
+            var filterValue = filterValueComboBox.SelectedItem as string;
 
-            if (string.IsNullOrWhiteSpace(filterValue))
+            if (filterValue != null || string.IsNullOrWhiteSpace(filterValue))
             {
                 // Handle the case where the filter value is empty, if necessary.
-                ProducerLVM.RefreshList(blc.GetProducers());
             }
 
             // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
-                case "phone name":
-                    break;
                 case "software type":
                     FilterPhoneBySoftwareType(filterValue);
                     break;
                 case "producer name":
                     FilterPhoneByProducer(filterValue);
                     break;
-                case "producer address":
-                    break;
-                case "price":
-                    break;
                 case "year of production":
                     FilterPhoneByYear(filterValue);
                     break;
                 default:
-                    // Handle unexpected filter type, if necessary.
                     MessageBox.Show("Unknown filter type selected.");
                     break;
             }
@@ -321,9 +284,76 @@ namespace _148075._148159.PhonesCatalog.UI
             }
         }
 
+        private void RemoveFiltersPhone(object sender, RoutedEventArgs e)
+        {
+            PhoneLVM.RefreshList(blc.GetPhones());
+           
+            PhoneList.Items.Clear();
+            foreach (var phone in PhoneLVM.Phones)
+            {
+                PhoneList.Items.Add(phone);
+            }
+        }
+
+        private void RemoveFiltersProducer(object sender, RoutedEventArgs e)
+        {
+            ProducerLVM.RefreshList(blc.GetProducers());
+
+            ProducerList.Items.Clear();
+            foreach (var producer in ProducerLVM.Producers)
+            {
+                ProducerList.Items.Add(producer);
+            }
+        }
         #endregion
 
         #region Phone operations
+        private void FilterTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+
+            // Get the selected filter type
+            string selectedFilter = (e.AddedItems[0] as ComboBoxItem)?.Content.ToString();
+
+            // Dynamically populate ComboBox based on the selected filter type
+            switch (selectedFilter)
+            {
+                case "producer name":
+                    filterValueComboBox.ItemsSource = GetProducerNames();
+                    break;
+                case "year of production":
+                    filterValueComboBox.ItemsSource = GetYearsOfProduction();
+                    break;
+                case "software type":
+                    filterValueComboBox.ItemsSource = GetSoftwares();
+                    break;
+                default:
+                    filterValueComboBox.ItemsSource = null;
+                    break;
+            }
+
+            // Reset the selected item
+            filterValueComboBox.SelectedItem = null;
+        }
+
+
+        private IEnumerable<string> GetProducerNames()
+        {
+            // Implement your logic to get a list of producer names
+            return blc.GetAllProducersNames();
+        }
+
+        private IEnumerable<string> GetYearsOfProduction()
+        {
+            // Implement your logic to get a list of years of production
+            return blc.GetPhones().Select(p => p.YearOfProduction.ToString()).Distinct();
+        }
+
+        private IEnumerable<string> GetSoftwares()
+        {
+            // Implement your logic to get a list of years of production
+            return blc.GetPhones().Select(p => p.SoftwareType.ToString()).Distinct();
+        }
 
         private void PhoneList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

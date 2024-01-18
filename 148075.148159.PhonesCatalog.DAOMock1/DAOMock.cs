@@ -15,8 +15,8 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
         public DAOMock()
         {
             producers = new List<IProducer>();
-            CreateNewProducer(new BO.Producer() { ID = 1, Name = "Samsung" });
-            CreateNewProducer(new BO.Producer() { ID = 2, Name = "Apple" });
+            CreateNewProducer(new BO.Producer() { ID = 1, Name = "Samsung", Address = "Seoul, South Korea" });
+            CreateNewProducer(new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" });
 
             phones = new List<IPhone>();
             CreateNewPhone(new BO.Phone()
