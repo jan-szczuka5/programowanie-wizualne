@@ -514,6 +514,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 {
                     ProducerList.Items.Add(produceritem);
                 }
+                producerFilterValueComboBox.ItemsSource = GetAddresses();
             }
         }
 
@@ -535,6 +536,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 {
                     PhoneList.Items.Add(phoneitem);
                 }
+                producerFilterValueComboBox.ItemsSource = GetAddresses();
             }
             else
             {
@@ -567,11 +569,13 @@ namespace _148075._148159.PhonesCatalog.UI
                     ProducerList.Items.Add(produceritem);
                 }
                 }
+                producerFilterValueComboBox.ItemsSource = GetAddresses();
             }
             else
             {
                 MessageBox.Show("Producer is not selected!");
             }
+
         }
         #endregion
     }
