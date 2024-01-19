@@ -40,6 +40,7 @@ namespace _148075._148159.PhonesCatalog.UI
             ProducerLVM.RefreshList(blc.GetProducers().Distinct());
             PhoneLVM.RefreshList(blc.GetPhones());
             InitializeComponent();
+            producerFilterValueComboBox.ItemsSource = GetAddresses();
             foreach (var phone in PhoneLVM.Phones)
             {
                 PhoneList.Items.Add(phone);
@@ -121,39 +122,28 @@ namespace _148075._148159.PhonesCatalog.UI
 
         private void ProducerApplyFilter(object sender, RoutedEventArgs e)
         {
-            // First, determine the selected filter type from the ComboBox.
-            var selectedFilter = producerfilterTypeComboBox.SelectedItem as ComboBoxItem;
 
-            if (selectedFilter == null)
-            {
-                // Handle the case where no filter is selected, if necessary.
-                ProducerLVM.RefreshList(blc.GetProducers());
-            }
+
 
             // Retrieve the filter value entered by the user.
-            string filterValue = producerfilterValueTextBox.Text;
+            string filterValue = producerFilterValueComboBox.SelectedItem as string;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
                 // Handle the case where the filter value is empty, if necessary.
                 ProducerLVM.RefreshList(blc.GetProducers());
             }
-
-            // Apply the filter based on the selected filter type.
-            switch (selectedFilter.Content.ToString())
+            else
             {
-
-                case "producer name":
-                    break;
-                case "producer address":
-                    FilterProducerByAddress(filterValue);
-                    break;
-                default:
-                    // Handle unexpected filter type, if necessary.
-                    MessageBox.Show("Unknown filter type selected.");
-                    break;
+                FilterProducerByAddress(filterValue);
             }
+
+
+            
+
+            
         }
+
 
         private void PhoneApplyFilter(object sender, RoutedEventArgs e)
         {
@@ -241,7 +231,7 @@ namespace _148075._148159.PhonesCatalog.UI
 
         private void FilterProducerByAddress(string address)
         {
-            if (address == "")
+            if (string.IsNullOrWhiteSpace(address))
             {
                 ProducerLVM.RefreshList(blc.GetProducers());
                 ProducerList.Items.Clear();
@@ -353,6 +343,11 @@ namespace _148075._148159.PhonesCatalog.UI
         {
             // Implement your logic to get a list of years of production
             return blc.GetPhones().Select(p => p.SoftwareType.ToString()).Distinct();
+        }
+
+        private IEnumerable<string> GetAddresses()
+        {
+            return blc.GetProducers().Select(p => p.Address.ToString()).Distinct();
         }
 
         private void PhoneList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -112,12 +112,8 @@
 
                 <StackPanel DockPanel.Dock="Top" Margin="0,10" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal" Margin="0,10">
-                        <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
-                        <ComboBox Margin="5" Padding="2" Name="producerfilterTypeComboBox" MinWidth="100" >
-                            <ComboBoxItem Content="producer name" />
-                            <ComboBoxItem Content="producer address" />
-                        </ComboBox>
-                        <TextBox Margin="5" Padding="2" Name="producerfilterValueTextBox" MinWidth="100"/>
+                        <TextBlock Margin="5" Padding="2">Filter producers by address:</TextBlock>
+                        <ComboBox Margin="5" Padding="2" Name="producerFilterValueComboBox" MinWidth="100"/>
                         <Button Margin="5" Padding="2" Click="ProducerApplyFilter">Apply filter</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10">
