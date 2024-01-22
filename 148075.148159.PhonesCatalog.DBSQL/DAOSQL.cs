@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace _148075._148159.PhonesCatalog.DBSQL
 {
@@ -13,6 +14,13 @@ namespace _148075._148159.PhonesCatalog.DBSQL
         public DbSet<PhoneDBSQL> PhonesRelation { get; set; }
         public DbSet<ProducerDBSQL> ProducersRelation { get; set; }
         public string DbPath { get; }
+
+        private IConfiguration _configuration;
+
+        public DAOSQL(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public DAOSQL()
         {
