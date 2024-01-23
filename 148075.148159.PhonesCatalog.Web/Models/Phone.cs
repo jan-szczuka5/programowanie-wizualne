@@ -1,9 +1,7 @@
 ﻿using _148075._148159.PhonesCatalog.Core;
-using _148075._148159.PhonesCatalog.Interfaces;
 
 namespace _148075._148159.PhonesCatalog.Web.Models
 {
-
     public class Phone
     {
         public int ID { get; set; }
@@ -13,5 +11,6 @@ namespace _148075._148159.PhonesCatalog.Web.Models
         public int AlreadySold { get; set; }
         public int Price { get; set; }
         public SoftwareType SoftwareType { get; set; }
+
     }
 }

@@ -4,7 +4,6 @@ using _148075._148159.PhonesCatalog.BLC;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<DataContext>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

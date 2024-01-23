@@ -99,5 +99,10 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 
             Entry(phone).CurrentValues.SetValues(phone);
         }
+
+        public IPhone NewPhone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,34 +7,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Web;
 using _148075._148159.PhonesCatalog.Web.Models;
+using _148075._148159.PhonesCatalog.Core;
 
 namespace _148075._148159.PhonesCatalog.Web.Controllers
 {
     public class PhonesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly BLC.BLC _blc;
 
-        public PhonesController(DataContext context)
+        public PhonesController()
         {
-            _context = context;
+            string libraryName = System.Configuration.ConfigurationManager.AppSettings["DAOLibraryName"]!;
+            _blc = BLC.BLC.GetInstance(libraryName);
         }
 
         // GET: Phones
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Phones.ToListAsync());
+            var phones = _blc.GetPhones().ToList();
+            Console.WriteLine(phones.Count);
+            return View(phones);
         }
 
         // GET: Phones/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var phone = await _context.Phones
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var phone = _blc.GetPhoneById(id.Value);
             if (phone == null)
             {
                 return NotFound();
@@ -46,6 +49,7 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // GET: Phones/Create
         public IActionResult Create()
         {
+            ViewBag.Producers = _blc.GetProducers();
             return View();
         }
 
@@ -54,30 +58,41 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,YearOfProduction,AlreadySold,Price,SoftwareType")] Phone phone)
+        public IActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(phone);
-                await _context.SaveChangesAsync();
+                var phone = new DAOMock1.BO.Phone();
+                phone.Name = collection["Name"];
+                phone.YearOfProduction = int.Parse(collection["YearOfProduction"]);
+                phone.AlreadySold = int.Parse(collection["AlreadySold"]);
+                phone.Price = int.Parse(collection["Price"]);
+                phone.SoftwareType = (SoftwareType)Enum.Parse(typeof(SoftwareType), collection["SoftwareType"]);
+                phone.Producer = (Interfaces.IProducer)_blc.GetProducerById(int.Parse(collection["Producer"]));
+
+                _blc.CreatePhone(phone);
                 return RedirectToAction(nameof(Index));
             }
-            return View(phone);
+            catch(Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: Phones/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var phone = await _context.Phones.FindAsync(id);
+            var phone = _blc.GetPhoneById(id.Value);
             if (phone == null)
             {
                 return NotFound();
             }
+            ViewBag.Producers = _blc.GetProducers();
             return View(phone);
         }
 
@@ -86,46 +101,36 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,YearOfProduction,AlreadySold,Price,SoftwareType")] Phone phone)
+        public IActionResult Edit(int id, IFormCollection collection)
         {
-            if (id != phone.ID)
+            try
             {
-                return NotFound();
-            }
+                var phone = _blc.GetPhoneById(id);
+                phone.Name = collection["Name"];
+                phone.YearOfProduction = int.Parse(collection["YearOfProduction"]);
+                phone.AlreadySold = int.Parse(collection["AlreadySold"]);
+                phone.Price = int.Parse(collection["Price"]);
+                phone.SoftwareType = (SoftwareType)Enum.Parse(typeof(SoftwareType), collection["SoftwareType"]);
+                phone.Producer = (Interfaces.IProducer)_blc.GetProducerById(int.Parse(collection["Producer"]));
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(phone);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PhoneExists(phone.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _blc.UpdatePhone(phone);
                 return RedirectToAction(nameof(Index));
             }
-            return View(phone);
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: Phones/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var phone = await _context.Phones
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var phone = _blc.GetPhoneById(id.Value);
             if (phone == null)
             {
                 return NotFound();
@@ -137,21 +142,11 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // POST: Phones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var phone = await _context.Phones.FindAsync(id);
-            if (phone != null)
-            {
-                _context.Phones.Remove(phone);
-            }
-
-            await _context.SaveChangesAsync();
+            _blc.DeletePhone(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PhoneExists(int id)
-        {
-            return _context.Phones.Any(e => e.ID == id);
-        }
     }
 }

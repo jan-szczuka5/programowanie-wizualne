@@ -13,6 +13,8 @@ namespace _148075._148159.PhonesCatalog.Interfaces
         IProducer CreateNewProducer(IProducer producer);
         IPhone CreateNewPhone(IPhone phone);
 
+        IPhone NewPhone();
+
         void DeleteProducer(int producerId);
 
         void DeletePhone(int phoneId);

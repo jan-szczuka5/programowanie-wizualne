@@ -11,6 +11,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
     {
         private List<IProducer> producers;
         private List<IPhone> phones;
+        private int nextPhoneId = 3;
 
         public DAOMock()
         {
@@ -18,31 +19,36 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
             CreateNewProducer(new BO.Producer() { ID = 1, Name = "Samsung", Address = "Seoul, South Korea" });
             CreateNewProducer(new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" });
 
-            phones = new List<IPhone>();
-            CreateNewPhone(new BO.Phone()
+            phones = new List<IPhone>()
             {
-                ID = 1,
-                Producer = producers[0],
-                Name = "Galaxy S23",
-                YearOfProduction = 2022,
-                Price = 600,
-                AlreadySold = 1163000,
-                SoftwareType = Core.SoftwareType.Android
-            });
-            CreateNewPhone(new BO.Phone()
-            {
-                ID = 2,
-                Producer = producers[1],
-                Name = "IPhone 15",
-                YearOfProduction = 2023,
-                Price = 650,
-                AlreadySold = 1563000,
-                SoftwareType = Core.SoftwareType.iOS
-            });
+                new BO.Phone()
+                {
+                    ID = 1,
+                    Producer = producers[0],
+                    Name = "Galaxy S23",
+                    YearOfProduction = 2022,
+                    Price = 600,
+                    AlreadySold = 1163000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 2,
+                    Producer = producers[1],
+                    Name = "IPhone 15",
+                    YearOfProduction = 2023,
+                    Price = 650,
+                    AlreadySold = 1563000,
+                    SoftwareType = Core.SoftwareType.iOS
+                }
+            };
         }
         public IPhone CreateNewPhone(IPhone phone)
         {
+            phone.ID = nextPhoneId++;
+            Console.WriteLine("in daomock");
             phones.Add(phone);
+            Console.WriteLine(phone.Name);
             return phone;
         }
 
@@ -81,10 +87,22 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
             return producers;
         }
 
+        public IPhone NewPhone()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdatePhone(IPhone phoneUpdated)
         {
-            int phoneId = phones.FindIndex(phoneOld => phoneOld.ID.Equals(phoneUpdated.ID));
-            phones[phoneId] = phoneUpdated;
+            int phoneIndex = phones.FindIndex(phone => phone.ID == phoneUpdated.ID);
+            if (phoneIndex != -1)
+            {
+                phones[phoneIndex] = phoneUpdated; // Maintain the existing ID
+            }
+            else
+            {
+                throw new Exception("Phone not found");
+            }
         }
 
         public void UpdateProducer(IProducer producerUpdated)

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\148075.148159.PhonesCatalog.Core\148075.148159.PhonesCatalog.Core.csproj" />
     <ProjectReference Include="..\148075.148159.PhonesCatalog.DBSQL\148075.148159.PhonesCatalog.DBSQL.csproj" />
     <ProjectReference Include="..\148075.148159.PhonesCatalog.Interfaces\148075.148159.PhonesCatalog.Interfaces.csproj" />

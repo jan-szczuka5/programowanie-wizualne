@@ -364,7 +364,7 @@ namespace _148075._148159.PhonesCatalog.UI
             {
                 Phone phoneEditDialog = new(
                     blc.GetAllPhonesNames(),
-                    blc.GetPhoneById(selectedPhone.PhoneID).First()
+                    blc.GetPhoneById(selectedPhone.PhoneID)
                 );
 
                 if (phoneEditDialog.ShowDialog() == true)

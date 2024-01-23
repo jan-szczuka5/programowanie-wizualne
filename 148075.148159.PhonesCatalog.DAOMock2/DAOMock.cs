@@ -73,6 +73,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
             return producers;
         }
 
+        public IPhone NewPhone()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdatePhone(IPhone phoneUpdated)
         {
             int phoneId = phones.FindIndex(phoneOld => phoneOld.ID.Equals(phoneUpdated.ID));
