@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace _148075._148159.PhonesCatalog.DAOMock1
 {
@@ -15,9 +17,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
 
         public DAOMock()
         {
-            producers = new List<IProducer>();
-            CreateNewProducer(new BO.Producer() { ID = 1, Name = "Samsung", Address = "Seoul, South Korea" });
-            CreateNewProducer(new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" });
+            producers = new List<IProducer>()
+            {
+                new BO.Producer() { ID = 1, Name = "Samsung", Address = "Seoul, South Korea" },
+                new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" }
+            };
 
             phones = new List<IPhone>()
             {
@@ -52,6 +56,23 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
             return phone;
         }
 
+        public void CreatePhone(IPhone phone)
+        {
+            var phone_element = new BO.Phone()
+            {
+                ID = phones.Max(f => f.ID) + 1,
+                Name = phone.Name,
+                Producer = phone.Producer,
+                YearOfProduction = phone.YearOfProduction,
+                AlreadySold = phone.AlreadySold,
+                Price = phone.Price,
+                SoftwareType = phone.SoftwareType
+            };
+            Console.WriteLine("in daomock");
+            phones.Add(phone_element);
+            Console.WriteLine(phone.Name);
+        }
+
         public IProducer CreateNewProducer(IProducer producer)
         {
             producers.Add(producer);
@@ -79,6 +100,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
 
         public IEnumerable<IPhone> GetAllPhones()
         {
+            Console.WriteLine("daomock getallphones");
             return phones;
         }
 

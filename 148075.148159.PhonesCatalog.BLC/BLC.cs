@@ -134,9 +134,9 @@ namespace _148075._148159.PhonesCatalog.BLC
             return _dao.GetAllPhones();
         }
 
-        public IEnumerable<IProducer> GetProducerById(int producerId)
+        public IProducer GetProducerById(int producerId)
         {
-            return _dao.GetAllProducers().Where(producer => producer.ID.Equals(producerId));
+            return _dao.GetAllProducers().First(producer => producer.ID.Equals(producerId));
         }
         public IPhone GetPhoneById(int phoneId)
         {
@@ -150,6 +150,11 @@ namespace _148075._148159.PhonesCatalog.BLC
         public void CreatePhone(IPhone phone)
         {
             _dao.CreateNewPhone(phone);
+        }
+
+        public void CreateNewPhone(IPhone phone)
+        {
+            _dao.CreatePhone(phone);
         }
 
         public void CreateProducer(IProducer producer)

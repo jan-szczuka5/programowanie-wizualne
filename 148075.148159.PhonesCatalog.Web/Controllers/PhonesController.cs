@@ -68,7 +68,9 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 phone.AlreadySold = int.Parse(collection["AlreadySold"]);
                 phone.Price = int.Parse(collection["Price"]);
                 phone.SoftwareType = (SoftwareType)Enum.Parse(typeof(SoftwareType), collection["SoftwareType"]);
-                phone.Producer = (Interfaces.IProducer)_blc.GetProducerById(int.Parse(collection["Producer"]));
+                var producerObject = _blc.GetProducerById(int.Parse(collection["Producer"]));
+                Console.WriteLine($"Producer object type: {producerObject.GetType().FullName}");
+                phone.Producer = (Interfaces.IProducer)producerObject;
 
                 _blc.CreatePhone(phone);
                 return RedirectToAction(nameof(Index));

@@ -44,7 +44,10 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
             return producer;
         }
 
-
+        public void CreatePhone(IPhone phone)
+        {
+            throw new NotImplementedException();
+        }
 
         public void DeletePhone(int phoneId)
         {

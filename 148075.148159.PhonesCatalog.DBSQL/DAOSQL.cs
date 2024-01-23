@@ -104,5 +104,10 @@ namespace _148075._148159.PhonesCatalog.DBSQL
         {
             throw new NotImplementedException();
         }
+
+        public void CreatePhone(IPhone phone)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
