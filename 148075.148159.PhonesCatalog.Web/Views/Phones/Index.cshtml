@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_148075._148159.PhonesCatalog.Web.Models.PhoneDetails>
+﻿@model IEnumerable<_148075._148159.PhonesCatalog.Web.Models.Phone>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,16 +19,13 @@
                 @Html.DisplayNameFor(model => model.YearOfProduction)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoftwareType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producer)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.AlreadySold)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoftwareType)
             </th>
             <th></th>
         </tr>
@@ -43,16 +40,13 @@
                 @Html.DisplayFor(modelItem => item.YearOfProduction)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SoftwareType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producer)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AlreadySold)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoftwareType)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

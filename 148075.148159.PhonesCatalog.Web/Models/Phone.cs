@@ -8,7 +8,7 @@ namespace _148075._148159.PhonesCatalog.Web.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int ProducerId { get; set; }
+        public Producer Producer { get; set; }
         public int YearOfProduction { get; set; }
         public int AlreadySold { get; set; }
         public int Price { get; set; }

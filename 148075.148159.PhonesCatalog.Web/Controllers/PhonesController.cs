@@ -10,22 +10,22 @@ using _148075._148159.PhonesCatalog.Web.Models;
 
 namespace _148075._148159.PhonesCatalog.Web.Controllers
 {
-    public class ProducersController : Controller
+    public class PhonesController : Controller
     {
         private readonly DataContext _context;
 
-        public ProducersController(DataContext context)
+        public PhonesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Producers
+        // GET: Phones
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Producers.ToListAsync());
+            return View(await _context.Phones.ToListAsync());
         }
 
-        // GET: Producers/Details/5
+        // GET: Phones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers
+            var phone = await _context.Phones
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (producer == null)
+            if (phone == null)
             {
                 return NotFound();
             }
 
-            return View(producer);
+            return View(phone);
         }
 
-        // GET: Producers/Create
+        // GET: Phones/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Producers/Create
+        // POST: Phones/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Address")] Producer producer)
+        public async Task<IActionResult> Create([Bind("ID,Name,YearOfProduction,AlreadySold,Price,SoftwareType")] Phone phone)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(producer);
+                _context.Add(phone);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(producer);
+            return View(phone);
         }
 
-        // GET: Producers/Edit/5
+        // GET: Phones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers.FindAsync(id);
-            if (producer == null)
+            var phone = await _context.Phones.FindAsync(id);
+            if (phone == null)
             {
                 return NotFound();
             }
-            return View(producer);
+            return View(phone);
         }
 
-        // POST: Producers/Edit/5
+        // POST: Phones/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Address")] Producer producer)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,YearOfProduction,AlreadySold,Price,SoftwareType")] Phone phone)
         {
-            if (id != producer.ID)
+            if (id != phone.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
             {
                 try
                 {
-                    _context.Update(producer);
+                    _context.Update(phone);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProducerExists(producer.ID))
+                    if (!PhoneExists(phone.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(producer);
+            return View(phone);
         }
 
-        // GET: Producers/Delete/5
+        // GET: Phones/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers
+            var phone = await _context.Phones
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (producer == null)
+            if (phone == null)
             {
                 return NotFound();
             }
 
-            return View(producer);
+            return View(phone);
         }
 
-        // POST: Producers/Delete/5
+        // POST: Phones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var producer = await _context.Producers.FindAsync(id);
-            if (producer != null)
+            var phone = await _context.Phones.FindAsync(id);
+            if (phone != null)
             {
-                _context.Producers.Remove(producer);
+                _context.Phones.Remove(phone);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProducerExists(int id)
+        private bool PhoneExists(int id)
         {
-            return _context.Producers.Any(e => e.ID == id);
+            return _context.Phones.Any(e => e.ID == id);
         }
     }
 }
