@@ -75,6 +75,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
 
         public IProducer CreateNewProducer(IProducer producer)
         {
+            producer.ID = producers.Max(f => f.ID) + 1;
             producers.Add(producer);
             return producer;
         }

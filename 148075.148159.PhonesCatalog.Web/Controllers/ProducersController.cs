@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Web;
 using _148075._148159.PhonesCatalog.Web.Models;
+using _148075._148159.PhonesCatalog.Core;
 
 namespace _148075._148159.PhonesCatalog.Web.Controllers
 {
     public class ProducersController : Controller
     {
-        private readonly DataContext _context;
+        private readonly BLC.BLC _blc;
 
-        public ProducersController(DataContext context)
+        public ProducersController()
         {
-            _context = context;
+            string libraryName = System.Configuration.ConfigurationManager.AppSettings["DAOLibraryName"]!;
+            _blc = BLC.BLC.GetInstance(libraryName);
+
         }
 
         // GET: Producers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Producers.ToListAsync());
+            var producers = _blc.GetProducers().ToList();
+            Console.WriteLine(producers.Count);
+            return View(producers);
         }
 
         // GET: Producers/Details/5
@@ -33,8 +38,7 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var producer = _blc.GetProducerById(id.Value);
             if (producer == null)
             {
                 return NotFound();
@@ -54,16 +58,23 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Address")] Producer producer)
+        public IActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(producer);
-                await _context.SaveChangesAsync();
+                var producer = new DAOMock1.BO.Producer();
+                producer.Name = collection["Name"];
+                producer.Address = collection["Address"];
+                _blc.CreateProducer(producer);
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction(nameof(Index));
             }
-            return View(producer);
         }
+
 
         // GET: Producers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -73,7 +84,7 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers.FindAsync(id);
+            var producer = _blc.GetProducerById(id.Value);
             if (producer == null)
             {
                 return NotFound();
@@ -86,34 +97,20 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Address")] Producer producer)
+        public async Task<IActionResult> Edit(int id, IFormCollection collection)
         {
-            if (id != producer.ID)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(producer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProducerExists(producer.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                var producer = _blc.GetProducerById(id);
+                producer.Name = collection["Name"];
+                producer.Address = collection["Address"];
+                _blc.UpdateProducer(producer);
                 return RedirectToAction(nameof(Index));
             }
-            return View(producer);
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: Producers/Delete/5
@@ -124,8 +121,7 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
                 return NotFound();
             }
 
-            var producer = await _context.Producers
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var producer = _blc.GetProducerById(id.Value);
             if (producer == null)
             {
                 return NotFound();
@@ -137,21 +133,10 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         // POST: Producers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var producer = await _context.Producers.FindAsync(id);
-            if (producer != null)
-            {
-                _context.Producers.Remove(producer);
-            }
-
-            await _context.SaveChangesAsync();
+            _blc.DeleteProducer(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProducerExists(int id)
-        {
-            return _context.Producers.Any(e => e.ID == id);
         }
     }
 }
