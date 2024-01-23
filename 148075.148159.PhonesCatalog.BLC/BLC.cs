@@ -36,11 +36,6 @@ namespace _148075._148159.PhonesCatalog.BLC
             }
         }
 
-        public BLC(IDAO dao)
-        {
-            _dao = dao;
-        }
-
         public BLC(string path)
         {
             LoadDatasource(path);
