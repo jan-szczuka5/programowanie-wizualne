@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>_148075._148159.PhonesCatalog.WebApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.BLC\148075.148159.PhonesCatalog.BLC.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.Core\148075.148159.PhonesCatalog.Core.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.DAOMock1\148075.148159.PhonesCatalog.DAOMock1.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.DBSQL\148075.148159.PhonesCatalog.DBSQL.csproj" />
+    <ProjectReference Include="..\148075.148159.PhonesCatalog.Interfaces\148075.148159.PhonesCatalog.Interfaces.csproj" />
+  </ItemGroup>
+s
+</Project>

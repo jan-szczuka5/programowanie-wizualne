@@ -8,5 +8,6 @@ namespace _148075._148159.PhonesCatalog.DAOMock1.BO
         public int ID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public List<IPhone> Phones { get; set; }
     }
 }

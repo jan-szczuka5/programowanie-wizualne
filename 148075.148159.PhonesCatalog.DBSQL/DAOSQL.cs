@@ -5,14 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Interfaces;
+using _148075._148159.PhonesCatalog.Core;
+using _148075._148159.PhonesCatalog.DBSQL.BO;
+using Microsoft.Extensions.Configuration;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace _148075._148159.PhonesCatalog.DBSQL
 {
     public class DAOSQL : DbContext, IDAO
     {
-        public DbSet<PhoneDBSQL> PhonesRelation { get; set; }
-        public DbSet<ProducerDBSQL> ProducersRelation { get; set; }
-        public string DbPath { get; }
+        private IConfiguration _configuration;
+
+        public DAOSQL(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite(_configuration.GetConnectionString("Sqlite"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Producer>()
+                .HasMany(p => (ICollection<Phone>)p.Phones)
+                .WithOne(b => (Producer)b.Producer);
+        }
+        public virtual DbSet<Phone> Phones { get; set; }
+        public virtual DbSet<Producer> Producers { get; set; }
+ /*       public string DbPath { get; }
 
         public DAOSQL()
         {
@@ -34,62 +56,105 @@ namespace _148075._148159.PhonesCatalog.DBSQL
         }
 
 
-
-        public IEnumerable<IProducer> GetAllProducers() => ProducersRelation.Select(producer => producer.ToIProducer());
+*/
+        public IEnumerable<IProducer> GetAllProducers() => Producers.ToList();
         public IEnumerable<IPhone> GetAllPhones()
         {
-            return PhonesRelation.Select(phone => phone.ToIPhone(ProducersRelation.ToList()));
+            return Phones.Include(phone => phone.Producer).ToList();
         }
 
-        public IProducer CreateNewProducer(IProducer producer)
+        public IProducer CreateNewProducer(int id, string name, string address)
         {
-            Add(new ProducerDBSQL() { ID = producer.ID, Name = producer.Name, Address = producer.Address });
+            Producer producer = new Producer() { 
+                ID = id, 
+                Name = name, 
+                Address = address };
+            Producers.Add(producer);
             SaveChanges();
             return producer;
 
         }
 
-        public IPhone CreateNewPhone(IPhone phone)
+        public IPhone CreateNewPhone(int id, string name, int producerID, int yearOfProduction, int alreadySold, int price, SoftwareType softwareType)
         {
-            Add(new PhoneDBSQL() { ID = phone.ID, Name = phone.Name, ProducerID = phone.Producer.ID, YearOfProduction = phone.YearOfProduction, AlreadySold = phone.AlreadySold, Price = phone.Price, SoftwareType = phone.SoftwareType });
+            Producer? producer = Producers.Find(producerID);
+            if (producer == null)
+            {
+                throw new ArgumentException("That producer doesn't exist");
+            }
+            Phone phone = new Phone() { 
+                ID = id, 
+                Name = name, 
+                Producer = producer, 
+                YearOfProduction = yearOfProduction, 
+                AlreadySold = alreadySold, 
+                Price = price, 
+                SoftwareType = softwareType };
             SaveChanges();
             return phone;
         }
 
         public void DeleteProducer(int producerId)
         {
-            var producer = ProducersRelation.FirstOrDefault(producer => producer.ID == producerId);
-            Remove(producer);
-            SaveChanges();
+            Producer? producer = Producers.Find(producerId);
+            if (producer == null)
+            {
+                Producers.Remove(producer);
+                SaveChanges();
+            }
         }
 
         public void DeletePhone(int phoneId)
         {
-            var phone = PhonesRelation.FirstOrDefault(phone => phone.ID == phoneId);
-            Remove(phone);
-            SaveChanges();
+            Phone? phone = Phones.Find(phoneId);
+            if (phone == null)
+            {
+                Phones.Remove(phone);
+                SaveChanges();
+            }
         }
 
-        public void UpdateProducer(IProducer producerUpdated)
+        public void UpdateProducer(int id, string name, string address)
         {
-            var producer = ProducersRelation.FirstOrDefault(producer => producer.ID.Equals(producerUpdated.ID));
-            producer.Name = producerUpdated.Name;
-            producer.Address = producerUpdated.Address;
-
-            Entry(producer).CurrentValues.SetValues(producer);
+            Producer producer = Producers.Find(id);
+            if (producer != null)
+            {
+                producer.ID = id;
+                producer.Name = name;
+                producer.Address = address;
+                SaveChanges();
+            };
         }
 
-        public void UpdatePhone(IPhone phoneUpdated)
+            public void UpdatePhone(int id, string name, int producerID, int yearOfProduction, int alreadySold, int price, SoftwareType softwareType)
         {
-            var phone = PhonesRelation.FirstOrDefault(phone => phone.ID.Equals(phoneUpdated.ID));
-            phone.Name = phoneUpdated.Name;
-            phone.ProducerID = phoneUpdated.Producer.ID;
-            phone.YearOfProduction = phoneUpdated.YearOfProduction;
-            phone.AlreadySold = phoneUpdated.AlreadySold;
-            phone.Price = phoneUpdated.Price;
-            phone.SoftwareType = phoneUpdated.SoftwareType;
+            Phone? phone = Phones.Find(id);
+            if (phone != null)
+            {
+                Producer? producer = Producers.Find(producerID);
+                if (producer == null)
+                {
+                    throw new ArgumentException("Publisher doesn't exist");
+                }
+                phone.ID = id;
+                phone.Name = name;
+                phone.Producer = producer;
+                phone.YearOfProduction = yearOfProduction;
+                phone.AlreadySold = alreadySold;
+                phone.Price = price;
+                phone.SoftwareType = softwareType;
+                SaveChanges();
+            };
+        }
 
-            Entry(phone).CurrentValues.SetValues(phone);
+        public IPhone? GetPhone(int phoneId)
+        {
+            return Phones.Find(phoneId);
+        }
+
+        public IProducer? GetProducer(int producerId)
+        {
+            return Producers.Include(p => p.Phones).FirstOrDefault(p => p.ID == producerId);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using _148075._148159.PhonesCatalog.Core;
 using _148075._148159.PhonesCatalog.Interfaces;
-using _148075._148159.PhonesCatalog.DBSQL;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace _148075._148159.PhonesCatalog.BLC
 {
@@ -9,7 +9,37 @@ namespace _148075._148159.PhonesCatalog.BLC
     {
         private IDAO dao;
 
-        public BLC(string path)
+        public BLC(IConfiguration configuration)
+        {
+            string libraryName = System.Configuration.ConfigurationManager.AppSettings["DBLibraryName"]!;
+            Assembly assembly = Assembly.UnsafeLoadFrom(libraryName);
+            Type? typeToCreate = null;
+
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsAssignableTo(typeof(IDAO)))
+                {
+                    typeToCreate = type;
+                    break;
+                }
+            }
+            ConstructorInfo? constructor = typeToCreate!.GetConstructor(new[] { typeof(IConfiguration) });
+            if (constructor != null)
+            {
+                dao = (IDAO)constructor.Invoke(new object[] { configuration })!;
+            }
+            else
+            {
+                dao = (IDAO)Activator.CreateInstance(typeToCreate!, null)!;
+            }
+        }
+
+        public BLC(IDAO dao)
+        {
+            this.dao = dao;
+        }
+
+        /*public BLC(string path)
         {
             LoadDatasource(path);
         }
@@ -39,7 +69,7 @@ namespace _148075._148159.PhonesCatalog.BLC
                 throw new InvalidOperationException("No compatible IDAO type found in assembly.");
             }
         }
-
+*/
         #region Handle DAO 
         private Type FindDAOType(string path)
         {
@@ -88,27 +118,27 @@ namespace _148075._148159.PhonesCatalog.BLC
             return dao.GetAllPhones();
         }
 
-        public IEnumerable<IProducer> GetProducerById(int producerId)
+        public IProducer GetProducerById(int producerId)
         {
-            return dao.GetAllProducers().Where(producer => producer.ID.Equals(producerId));
+            return dao.GetProducer(producerId);
         }
-        public IEnumerable<IPhone> GetPhoneById(int phoneId)
+        public IPhone GetPhoneById(int phoneId)
         {
-            return dao.GetAllPhones().Where(phone => phone.ID.Equals(phoneId));
+            return dao.GetPhone(phoneId);
         }
 
         public IEnumerable<string> GetAllPhonesNames() => from phone in dao.GetAllProducers() select phone.Name;
 
         public IEnumerable<string> GetAllProducersNames() => from producer in dao.GetAllProducers() select producer.Name;
 
-        public void CreatePhone(IPhone phone)
+        public void CreatePhone(int id, string name, int producerID, int yearOfProduction, int alreadySold, int price, SoftwareType softwareType)
         {
-            dao.CreateNewPhone(phone);
+            dao.CreateNewPhone(id, name, producerID, yearOfProduction, alreadySold, price, softwareType);
         }
 
-        public void CreateProducer(IProducer producer)
+        public void CreateProducer(int id, string name, string address)
         {
-            dao.CreateNewProducer(producer);
+            dao.CreateNewProducer(id, name, address);
         }
 
         public void DeleteProducer(int producerId)
@@ -121,14 +151,14 @@ namespace _148075._148159.PhonesCatalog.BLC
             dao.DeletePhone(phoneId);
         }
 
-        public void UpdateProducer(IProducer producer)
+        public void UpdateProducer(int id, string name, string address)
         {
-            dao.UpdateProducer(producer);
+            dao.UpdateProducer(id, name, address);
         }
 
-        public void UpdatePhone(IPhone phone)
+        public void UpdatePhone(int id, string name, int producerID, int yearOfProduction, int alreadySold, int price, SoftwareType softwareType)
         {
-            dao.UpdatePhone(phone);
+            dao.UpdatePhone(id, name, producerID, yearOfProduction, alreadySold, price, softwareType);
         }
 
         public IEnumerable<IPhone> FilterPhoneByProducer(string producerName)
