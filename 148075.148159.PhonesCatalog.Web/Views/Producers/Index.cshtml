@@ -1,14 +1,35 @@
 ﻿@model IEnumerable<_148075._148159.PhonesCatalog.Interfaces.IProducer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Producers";
 }
 
-<h1>Index</h1>
+<h1>Producers</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new producer</a>
 </p>
+
+<form asp-controller="Producers" asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="searchTerm">Search by producer name:</label>
+        <input type="text" name="searchTerm" id="searchTerm"  class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="filterByAddress">Filter by address:</label>
+        <select name="filterByAddress" class="form-control">
+            <option value="">-- Select Address --</option>
+            @foreach (var address in ViewBag.UniqueAddresses)
+            {
+                <option value="@address">@address</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>

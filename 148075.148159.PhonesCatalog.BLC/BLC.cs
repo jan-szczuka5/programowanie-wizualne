@@ -3,6 +3,7 @@ using _148075._148159.PhonesCatalog.Interfaces;
 using _148075._148159.PhonesCatalog.DBSQL;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace _148075._148159.PhonesCatalog.BLC
 {
@@ -209,7 +210,14 @@ namespace _148075._148159.PhonesCatalog.BLC
         {
             return _dao.GetAllProducers().Where(producer => producer.Name.Contains(producerName));
         }
+        public IEnumerable<string> GetUniqueAddresses()
+        {
+            return _dao.GetAllProducers().Select(producer => producer.Address).Distinct().ToList();
+        }
 
-
+        public IEnumerable<string> GetUniqueYearsOfProduction()
+        {
+            return _dao.GetAllPhones().Select(phone => phone.YearOfProduction.ToString()).Distinct().ToList();
+        }
     }
 }

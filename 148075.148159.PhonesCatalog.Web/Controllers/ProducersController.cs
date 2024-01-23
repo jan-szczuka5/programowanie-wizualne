@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Web;
 using _148075._148159.PhonesCatalog.Web.Models;
 using _148075._148159.PhonesCatalog.Core;
+using _148075._148159.PhonesCatalog.Interfaces;
 
 namespace _148075._148159.PhonesCatalog.Web.Controllers
 {
@@ -23,10 +24,37 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         }
 
         // GET: Producers
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm, string filterByAddress)
         {
             var producers = _blc.GetProducers().ToList();
-            Console.WriteLine(producers.Count);
+            if (!string.IsNullOrEmpty(searchTerm) && !string.IsNullOrEmpty(filterByAddress))
+                {
+                var searchResults = _blc.SearchProducerByName(searchTerm).ToList();
+                var filterResults= _blc.FilterProducerByAddress(filterByAddress).ToList();
+
+                producers = searchResults.Intersect(filterResults).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchTerm))
+            {
+                // Perform search based on the name
+                producers = _blc.SearchProducerByName(searchTerm).ToList();
+            }
+            else if (!string.IsNullOrEmpty(filterByAddress))
+            {
+                // Perform filtering based on the address
+                producers = _blc.FilterProducerByAddress(filterByAddress).ToList();
+            }
+            else if (string.IsNullOrEmpty(filterByAddress) && string.IsNullOrEmpty(searchTerm))
+            {
+                // Get all producers
+                producers = _blc.GetProducers().ToList();
+            }
+            else 
+            {
+                producers = new List<IProducer>();
+            }
+            ViewBag.UniqueAddresses = _blc.GetUniqueAddresses(); // Add this line
+
             return View(producers);
         }
 

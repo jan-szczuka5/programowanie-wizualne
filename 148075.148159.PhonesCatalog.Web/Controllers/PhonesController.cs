@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Web;
 using _148075._148159.PhonesCatalog.Web.Models;
 using _148075._148159.PhonesCatalog.Core;
+using _148075._148159.PhonesCatalog.Interfaces;
 
 namespace _148075._148159.PhonesCatalog.Web.Controllers
 {
@@ -22,10 +23,45 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
         }
 
         // GET: Phones
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm, string filterByProducer, SoftwareType? filterBySoftwareType, int? filterByYear)
         {
-            var phones = _blc.GetPhones().ToList();
-            Console.WriteLine(phones.Count);
+            IEnumerable<IPhone> phones;
+
+            if (!string.IsNullOrEmpty(searchTerm) || !string.IsNullOrEmpty(filterByProducer) || filterBySoftwareType.HasValue || filterByYear.HasValue)
+            {
+                // Apply all filters and intersect the results
+                phones = _blc.GetPhones();
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    phones = phones.Intersect(_blc.SearchPhoneByName(searchTerm));
+                }
+
+                if (!string.IsNullOrEmpty(filterByProducer))
+                {
+                    phones = phones.Intersect(_blc.FilterPhoneByProducer(filterByProducer));
+                }
+
+                if (filterBySoftwareType.HasValue)
+                {
+                    phones = phones.Intersect(_blc.FilterPhoneBySoftwareType(filterBySoftwareType.Value));
+                }
+
+                if (filterByYear.HasValue)
+                {
+                    phones = phones.Intersect(_blc.FilterPhoneByYear(filterByYear.Value));
+                }
+            }
+            else
+            {
+                // Get all phones if no filters are applied
+                phones = _blc.GetPhones();
+            }
+
+            ViewBag.ProducerFilterOptions = _blc.GetAllProducersNames();
+            ViewBag.SoftwareTypeFilterOptions = Enum.GetValues(typeof(SoftwareType)).Cast<SoftwareType>();
+            ViewBag.YearFilterOptions = _blc.GetUniqueYearsOfProduction();
+
             return View(phones);
         }
 
