@@ -203,7 +203,7 @@ namespace _148075._148159.PhonesCatalog.BLC
         }
         public IEnumerable<IPhone> SearchPhoneByName(string phoneName)
         {
-            return _dao.GetAllPhones().Where(phone => phone.Name.Contains(phoneName));
+            return _dao.GetAllPhones().Where(phone => phone.Name.ToLower().Contains(phoneName.ToLower()));
         }
 
         public IEnumerable<IProducer> SearchProducerByName(string producerName)

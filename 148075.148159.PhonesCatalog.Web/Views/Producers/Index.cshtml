@@ -4,59 +4,119 @@
     ViewData["Title"] = "Producers";
 }
 
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h1 {
+        color: #000000;
+        justify-content: center;
+        display: flex;
+    }
+
+    .search-form {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-margin {
+        margin: 10px;
+    }
+
+    .button-container {
+        margin-top: 5px;
+        justify-content: center;
+        display: flex;
+    }
+
+    .table-container {
+        max-width: 800px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+        .table-container th {
+            text-align: center;
+        }
+
+        .table-container td {
+            text-align: center;
+        }
+
+        .table-container a {
+            margin: 0 5px;
+            color: #007bff;
+        }
+</style>
+
 <h1>Producers</h1>
+<div class="button-container">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Add new producer</a>
+    </p>
+</div>
+<div class="search-form">
+    <form asp-controller="Producers" asp-action="Index" method="get">
+        <div class="form-group">
+            <label for="searchTerm">Search by producer name:</label>
+            <input type="text" name="searchTerm" id="searchTerm" class="form-control" />
+        </div>
 
-<p>
-    <a asp-action="Create">Add new producer</a>
-</p>
+        <div class="form-group">
+            <label for="filterByAddress">Filter by address:</label>
+            <select name="filterByAddress" class="form-control">
+                <option value="">-- Select Address --</option>
+                @foreach (var address in ViewBag.UniqueAddresses)
+                {
+                    <option value="@address">@address</option>
+                }
+            </select>
+        </div>
+        <div class="button-container">
+        <button type="submit" class="btn btn-primary custom-margin">Search</button>
+        </div>
+    </form>
+</div>
 
-<form asp-controller="Producers" asp-action="Index" method="get">
-    <div class="form-group">
-        <label for="searchTerm">Search by producer name:</label>
-        <input type="text" name="searchTerm" id="searchTerm"  class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label for="filterByAddress">Filter by address:</label>
-        <select name="filterByAddress" class="form-control">
-            <option value="">-- Select Address --</option>
-            @foreach (var address in ViewBag.UniqueAddresses)
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <option value="@address">@address</option>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
             }
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

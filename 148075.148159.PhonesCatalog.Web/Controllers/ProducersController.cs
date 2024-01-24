@@ -166,5 +166,7 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
             _blc.DeleteProducer(id);
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }
