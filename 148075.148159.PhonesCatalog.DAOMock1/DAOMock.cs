@@ -20,7 +20,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
             producers = new List<IProducer>()
             {
                 new BO.Producer() { ID = 1, Name = "Samsung", Address = "Seoul, South Korea" },
-                new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" }
+                new BO.Producer() { ID = 2, Name = "Apple", Address = "California, United States" },
+                new BO.Producer() { ID = 3, Name = "Huawei", Address = "Shenzhen, China" },
+                new BO.Producer() { ID = 4, Name = "Google", Address = "Mountain View, United States" },
+                new BO.Producer() { ID = 5, Name = "OnePlus", Address = "Shenzhen, China" },
+                new BO.Producer() { ID = 6, Name = "Motorola", Address = "Chicago, United States" }
             };
 
             phones = new List<IPhone>()
@@ -44,6 +48,106 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
                     Price = 650,
                     AlreadySold = 1563000,
                     SoftwareType = Core.SoftwareType.iOS
+                },
+                new BO.Phone()
+                {
+                    ID = 3,
+                    Producer = producers[2],
+                    Name = "Mate 40",
+                    YearOfProduction = 2022,
+                    Price = 550,
+                    AlreadySold = 800000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 4,
+                    Producer = producers[3],
+                    Name = "Pixel 6",
+                    YearOfProduction = 2023,
+                    Price = 700,
+                    AlreadySold = 500000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 5,
+                    Producer = producers[4],
+                    Name = "OnePlus 9",
+                    YearOfProduction = 2021,
+                    Price = 650,
+                    AlreadySold = 1200000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 6,
+                    Producer = producers[5],
+                    Name = "Moto G Power",
+                    YearOfProduction = 2020,
+                    Price = 300,
+                    AlreadySold = 900000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 7,
+                    Producer = producers[0],
+                    Name = "Galaxy Note 20",
+                    YearOfProduction = 2021,
+                    Price = 800,
+                    AlreadySold = 1500000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 8,
+                    Producer = producers[1],
+                    Name = "IPhone SE",
+                    YearOfProduction = 2020,
+                    Price = 400,
+                    AlreadySold = 2000000,
+                    SoftwareType = Core.SoftwareType.iOS
+                },
+                new BO.Phone()
+                {
+                    ID = 9,
+                    Producer = producers[2],
+                    Name = "Huawei P50",
+                    YearOfProduction = 2022,
+                    Price = 700,
+                    AlreadySold = 900000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 10,
+                    Producer = producers[3],
+                    Name = "Google Pixel 5",
+                    YearOfProduction = 2020,
+                    Price = 600,
+                    AlreadySold = 1000000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 11,
+                    Producer = producers[4],
+                    Name = "OnePlus 8T",
+                    YearOfProduction = 2020,
+                    Price = 550,
+                    AlreadySold = 1200000,
+                    SoftwareType = Core.SoftwareType.Android
+                },
+                new BO.Phone()
+                {
+                    ID = 12,
+                    Producer = producers[5],
+                    Name = "Motorola Edge",
+                    YearOfProduction = 2021,
+                    Price = 450,
+                    AlreadySold = 800000,
+                    SoftwareType = Core.SoftwareType.Android
                 }
             };
         }
