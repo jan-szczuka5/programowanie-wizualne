@@ -50,7 +50,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 ProducerList.Items.Add(producer);
             }
         }
-        private void ApplyNewDataSource(object sender, RoutedEventArgs e)
+/*        private void ApplyNewDataSource(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 blc.LoadDatasource(selectedDAOMock);
             }
-        }
+        }*/
 
         #region Filters
         private void ApplyPhoneSearch(object sender, RoutedEventArgs e)
@@ -549,7 +549,7 @@ namespace _148075._148159.PhonesCatalog.UI
             if (selectedProducer != null)
             {
                 Producer producerDialog = new(
-                    blc.GetProducerById(selectedProducer.ProducerID).First()
+                    blc.GetProducerById(selectedProducer.ProducerID)
                 );
 
                 if (producerDialog.ShowDialog() == true)

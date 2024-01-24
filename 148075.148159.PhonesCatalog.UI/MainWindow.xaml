@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_148075._148159.PhonesCatalog.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="830">
     <TabControl>
         <TabItem Header="Phones">
 
@@ -14,16 +14,11 @@
 
                 <!-- Filters/Search Section (Top) -->
                 <StackPanel DockPanel.Dock="Top" Margin="10,5,10,5">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Padding="2">Data source (.dll):</TextBlock>
-                        <TextBox Margin="5" Padding="2" Name="datasource" MinWidth="100">148075.148159.PhonesCatalog.DAOMock1.dll</TextBox>
-                        <Button Margin="5" Padding="2" Click="ApplyNewDataSource">Apply</Button>
-                    </StackPanel>
                     <!-- Filters/Search Section (Top) -->
                     <StackPanel DockPanel.Dock="Top" Margin="0" Orientation="Horizontal">
                         <!-- Filter Section -->
                         <StackPanel Orientation="Horizontal" Margin="0,10">
-                            <TextBlock Margin="5" Padding="2">Filter by:</TextBlock>
+                            <TextBlock Margin="5" Padding="2">Filter phones by:</TextBlock>
                             <ComboBox Margin="5" Padding="2" Name="filterTypeComboBox" MinWidth="100" SelectionChanged="FilterTypeComboBox_SelectionChanged">
                                 <ComboBoxItem Content="software type" />
                                 <ComboBoxItem Content="producer name" />
@@ -110,7 +105,7 @@
 
 
 
-                <StackPanel DockPanel.Dock="Top" Margin="0,10" Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Top" Margin="0,10" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0,10">
                         <TextBlock Margin="5" Padding="2">Filter producers by address:</TextBlock>
                         <ComboBox Margin="5" Padding="2" Name="producerFilterValueComboBox" MinWidth="100"/>

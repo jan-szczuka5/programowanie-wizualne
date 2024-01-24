@@ -208,7 +208,7 @@ namespace _148075._148159.PhonesCatalog.BLC
 
         public IEnumerable<IProducer> SearchProducerByName(string producerName)
         {
-            return _dao.GetAllProducers().Where(producer => producer.Name.Contains(producerName));
+            return _dao.GetAllProducers().Where(producer => producer.Name.ToLower().Contains(producerName.ToLower()));
         }
         public IEnumerable<string> GetUniqueAddresses()
         {
