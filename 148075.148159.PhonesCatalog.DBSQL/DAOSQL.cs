@@ -11,8 +11,8 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 {
     public class DAOSQL : DbContext, IDAO
     {
-        public DbSet<PhoneDBSQL> PhonesRelation { get; set; }
-        public DbSet<ProducerDBSQL> ProducersRelation { get; set; }
+        public DbSet<PhoneDBSQL> Phones { get; set; }
+        public DbSet<ProducerDBSQL> Producers { get; set; }
         public string DbPath { get; }
 
         private IConfiguration _configuration;
@@ -43,10 +43,10 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 
 
 
-        public IEnumerable<IProducer> GetAllProducers() => ProducersRelation.Select(producer => producer.ToIProducer());
+        public IEnumerable<IProducer> GetAllProducers() => Producers.Select(producer => producer.ToIProducer());
         public IEnumerable<IPhone> GetAllPhones()
         {
-            return PhonesRelation.Select(phone => phone.ToIPhone(ProducersRelation.ToList()));
+            return Phones.Select(phone => phone.ToIPhone(Producers.ToList()));
         }
 
         public IProducer CreateNewProducer(IProducer producer)
@@ -66,21 +66,21 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 
         public void DeleteProducer(int producerId)
         {
-            var producer = ProducersRelation.FirstOrDefault(producer => producer.ID == producerId);
+            var producer = Producers.FirstOrDefault(producer => producer.ID == producerId);
             Remove(producer);
             SaveChanges();
         }
 
         public void DeletePhone(int phoneId)
         {
-            var phone = PhonesRelation.FirstOrDefault(phone => phone.ID == phoneId);
+            var phone = Phones.FirstOrDefault(phone => phone.ID == phoneId);
             Remove(phone);
             SaveChanges();
         }
 
         public void UpdateProducer(IProducer producerUpdated)
         {
-            var producer = ProducersRelation.FirstOrDefault(producer => producer.ID.Equals(producerUpdated.ID));
+            var producer = Producers.FirstOrDefault(producer => producer.ID.Equals(producerUpdated.ID));
             producer.Name = producerUpdated.Name;
             producer.Address = producerUpdated.Address;
 
@@ -89,7 +89,7 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 
         public void UpdatePhone(IPhone phoneUpdated)
         {
-            var phone = PhonesRelation.FirstOrDefault(phone => phone.ID.Equals(phoneUpdated.ID));
+            var phone = Phones.FirstOrDefault(phone => phone.ID.Equals(phoneUpdated.ID));
             phone.Name = phoneUpdated.Name;
             phone.ProducerID = phoneUpdated.Producer.ID;
             phone.YearOfProduction = phoneUpdated.YearOfProduction;
