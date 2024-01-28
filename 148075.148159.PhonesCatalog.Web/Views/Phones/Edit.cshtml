@@ -1,0 +1,113 @@
+﻿@using _148075._148159.PhonesCatalog.Core
+@model _148075._148159.PhonesCatalog.Interfaces.IPhone
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h1 {
+        color: #000000;
+        justify-content: center;
+        display: flex;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group-button {
+        margin-bottom: 20px;
+        justify-content: center;
+        display: flex;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .back-link {
+        margin-top: 20px;
+        display: block;
+        color: #007bff;
+    }
+</style>
+
+<h1>Edit Phone</h1>
+
+<div class="form-container">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Phone Name:</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="YearOfProduction" class="control-label">Year of Production:</label>
+            <input asp-for="YearOfProduction" class="form-control" />
+            <span asp-validation-for="YearOfProduction" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AlreadySold" class="control-label">Already Sold:</label>
+            <input asp-for="AlreadySold" class="form-control" />
+            <span asp-validation-for="AlreadySold" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label">Price:</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SoftwareType" class="control-label">Software Type:</label>
+            <select asp-for="SoftwareType" class="form-control">
+                @foreach (var item in Enum.GetValues(typeof(SoftwareType)))
+                {
+                    <option asp-for="SoftwareType" value="@item"> @item </option>
+                }
+            </select>
+            <span asp-validation-for="SoftwareType" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Producer" class="control-label">Producer:</label>
+            <select asp-for="Producer" class="form-control">
+                @foreach (var item in ViewBag.Producers)
+                {
+                    <option asp-for="Producer" value="@item.ID" selected="@(Model.Producer != null && Model.Producer.ID == item.ID)"> @item.Name </option>
+                }
+            </select>
+            <span asp-validation-for="Producer" class="text-danger"></span>
+        </div>
+        <div class="form-group-button">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <a asp-action="Index" class="back-link">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

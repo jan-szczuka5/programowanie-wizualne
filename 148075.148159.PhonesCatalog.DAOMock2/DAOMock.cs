@@ -11,8 +11,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
             {
                 producers = new List<IProducer>()
             {
-                new BO.Producer() { ID = 1, Name = "Xiaomi" },
-                new BO.Producer() { ID = 2, Name = "Sony" }
+                new BO.Producer() { ID = 1, Name = "Xiaomi", Address = "Beijing, China"},
+                new BO.Producer() { ID = 2, Name = "Sony", Address = "Tokyo, Japan" },
+                new BO.Producer() { ID = 3, Name = "LG", Address = "Seoul, South Korea" },
+                new BO.Producer() { ID = 4, Name = "Nokia", Address = "Espoo, Finland" },
+                new BO.Producer() { ID = 5, Name = "Asus", Address = "Taipei, Taiwan" }
             };
                 phones = new List<IPhone>()
             {
@@ -29,7 +32,63 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
                     YearOfProduction = 2006,
                     Price = 650,
                     AlreadySold = 1563000,
-                    SoftwareType = Core.SoftwareType.Android }
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 3,
+                    Producer = producers[2],
+                    Name = "LG G8",
+                    YearOfProduction = 2020,
+                    Price = 700,
+                    AlreadySold = 800000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 4,
+                    Producer = producers[3],
+                    Name = "Nokia 9",
+                    YearOfProduction = 2019,
+                    Price = 750,
+                    AlreadySold = 500000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 5,
+                    Producer = producers[0],
+                    Name = "Redmi Note 10",
+                    YearOfProduction = 2021,
+                    Price = 800,
+                    AlreadySold = 500000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 6,
+                    Producer = producers[0],
+                    Name = "Xiaomi Mi 11",
+                    YearOfProduction = 2021,
+                    Price = 900,
+                    AlreadySold = 700000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 7,
+                    Producer = producers[1],
+                    Name = "XPERIA 5 III",
+                    YearOfProduction = 2021,
+                    Price = 1000,
+                    AlreadySold = 300000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 8,
+                    Producer = producers[1],
+                    Name = "XPERIA 1 II",
+                    YearOfProduction = 2020,
+                    Price = 950,
+                    AlreadySold = 400000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 9,
+                    Producer = producers[2],
+                    Name = "LG V60 ThinQ",
+                    YearOfProduction = 2020,
+                    Price = 850,
+                    AlreadySold = 200000,
+                    SoftwareType = Core.SoftwareType.Android },
+                new BO.Phone() { ID = 10,
+                    Producer = producers[2],
+                    Name = "LG Velvet",
+                    YearOfProduction = 2020,
+                    Price = 750,
+                    AlreadySold = 300000,
+                    SoftwareType = Core.SoftwareType.Android },
             };
             }
         public IPhone CreateNewPhone(IPhone phone)
@@ -44,7 +103,10 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
             return producer;
         }
 
-
+        public void CreatePhone(IPhone phone)
+        {
+            throw new NotImplementedException();
+        }
 
         public void DeletePhone(int phoneId)
         {
@@ -55,6 +117,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
         public void DeleteProducer(int producerId)
         {
             IProducer producerDelete = producers.First(producer => producer.ID.Equals(producerId));
+            IEnumerable<IPhone> phonesToDelete = phones.Where(phone => phone.Producer.ID.Equals(producerId));
+            foreach(IPhone phone in phonesToDelete) 
+            {
+                phones.Remove(phone);
+            }
             producers.Remove(producerDelete);
         }
 
@@ -66,6 +133,11 @@ namespace _148075._148159.PhonesCatalog.DAOMock2
         public IEnumerable<IProducer> GetAllProducers()
         {
             return producers;
+        }
+
+        public IPhone NewPhone()
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdatePhone(IPhone phoneUpdated)

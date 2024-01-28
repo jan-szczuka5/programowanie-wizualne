@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace _148075._148159.PhonesCatalog.DAOMock1.BO
 {
+    [Serializable]
     public class Phone : IPhone
     {
         public int ID { get; set ; }

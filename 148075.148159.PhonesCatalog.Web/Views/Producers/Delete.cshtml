@@ -1,0 +1,88 @@
+﻿@model _148075._148159.PhonesCatalog.Interfaces.IProducer
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h1 {
+        color: #dc3545;
+        justify-content: center;
+        display: flex;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group-button {
+        margin-bottom: 20px;
+        justify-content: center;
+        display: flex;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .back-link {
+        margin-top: 20px;
+        display: block;
+        color: #007bff;
+        text-align: center;
+    }
+
+    .details-list dd {
+        margin-top: 5px 0;
+    }
+
+    .details-list dt {
+        min-width: 150px;
+    }
+</style>
+
+<h1>Are you sure you want to delete this?</h1>
+
+<div class="form-container">
+    <form asp-action="Delete">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Producer Name:</label>
+            <span asp-for="Name" class="form-control">@Model.Name</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Address" class="control-label">Address:</label>
+            <span asp-for="Address" class="form-control">@Model.Address</span>
+        </div>
+
+        <div class="form-group-button">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+
+        <div class="form-group">
+            <a asp-action="Index" class="back-link">Back to List</a>
+        </div>
+    </form>
+</div>

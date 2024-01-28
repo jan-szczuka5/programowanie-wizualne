@@ -104,5 +104,15 @@ namespace _148075._148159.PhonesCatalog.DBFile
             phones[phoneId] = phone;
             SavePhones();
         }
+
+        public void CreatePhone(IPhone phone)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPhone NewPhone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

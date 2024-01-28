@@ -2,12 +2,40 @@
 using _148075._148159.PhonesCatalog.Interfaces;
 using _148075._148159.PhonesCatalog.DBSQL;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace _148075._148159.PhonesCatalog.BLC
 {
     public class BLC
     {
-        private IDAO dao;
+        private IDAO _dao;
+        private static BLC instance;
+        private static readonly object lockObject = new object();
+        public BLC(IConfiguration configuration)
+        {
+            string libraryName = System.Configuration.ConfigurationManager.AppSettings["DAOLibraryName"]!;
+            Assembly assembly = Assembly.UnsafeLoadFrom(libraryName);
+            Type? typeToCreate = null;
+
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsAssignableTo(typeof(IDAO)))
+                {
+                    typeToCreate = type;
+                    break;
+                }
+            }
+            ConstructorInfo? constructor = typeToCreate!.GetConstructor(new[] { typeof(IConfiguration) });
+            if (constructor != null)
+            {
+                _dao = (IDAO)constructor.Invoke(new object[] { configuration })!;
+            }
+            else
+            {
+                _dao = (IDAO)Activator.CreateInstance(typeToCreate!, null)!;
+            }
+        }
 
         public BLC(string path)
         {
@@ -23,7 +51,7 @@ namespace _148075._148159.PhonesCatalog.BLC
         }
         public void LoadSql(string path)
         {
-            dao = new DAOSQL(path);
+            _dao = new DAOSQL(path);
         }
 
         public void LoadLibrary(string path)
@@ -32,12 +60,28 @@ namespace _148075._148159.PhonesCatalog.BLC
 
             if (typeToCreate != null)
             {
-                dao = CreateDAOInstance(typeToCreate);
+                _dao = CreateDAOInstance(typeToCreate);
             }
             else
             {
                 throw new InvalidOperationException("No compatible IDAO type found in assembly.");
             }
+        }
+
+        public static BLC GetInstance(string libraryName)
+        {
+            if (instance == null)
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new BLC(libraryName);
+                    }
+                }
+            }
+
+            return instance;
         }
 
         #region Handle DAO 
@@ -77,76 +121,103 @@ namespace _148075._148159.PhonesCatalog.BLC
         }
         #endregion
 
-
+        public IPhone NewPhone()
+        {             
+            return _dao.NewPhone();
+        }
 
         public IEnumerable<IProducer> GetProducers()
         {
-            return dao.GetAllProducers();
+            return _dao.GetAllProducers();
         }
         public IEnumerable<IPhone> GetPhones()
         {
-            return dao.GetAllPhones();
+            return _dao.GetAllPhones();
         }
 
-        public IEnumerable<IProducer> GetProducerById(int producerId)
+        public IProducer GetProducerById(int producerId)
         {
-            return dao.GetAllProducers().Where(producer => producer.ID.Equals(producerId));
+            return _dao.GetAllProducers().First(producer => producer.ID.Equals(producerId));
         }
-        public IEnumerable<IPhone> GetPhoneById(int phoneId)
+        public IPhone GetPhoneById(int phoneId)
         {
-            return dao.GetAllPhones().Where(phone => phone.ID.Equals(phoneId));
+            return _dao.GetAllPhones().First(phone => phone.ID.Equals(phoneId));
         }
+
+        public IEnumerable<string> GetAllPhonesNames() => from phone in _dao.GetAllProducers() select phone.Name;
+
+        public IEnumerable<string> GetAllProducersNames() => from producer in _dao.GetAllProducers() select producer.Name;
 
         public void CreatePhone(IPhone phone)
         {
-            dao.CreateNewPhone(phone);
+            _dao.CreateNewPhone(phone);
+        }
+
+        public void CreateNewPhone(IPhone phone)
+        {
+            _dao.CreatePhone(phone);
         }
 
         public void CreateProducer(IProducer producer)
         {
-            dao.CreateNewProducer(producer);
+            _dao.CreateNewProducer(producer);
         }
 
         public void DeleteProducer(int producerId)
         {
-            dao.DeleteProducer(producerId);
+            _dao.DeleteProducer(producerId);
         }
 
         public void DeletePhone(int phoneId)
         {
-            dao.DeletePhone(phoneId);
+            _dao.DeletePhone(phoneId);
         }
 
         public void UpdateProducer(IProducer producer)
         {
-            dao.UpdateProducer(producer);
+            _dao.UpdateProducer(producer);
         }
 
         public void UpdatePhone(IPhone phone)
         {
-            dao.UpdatePhone(phone);
+            _dao.UpdatePhone(phone);
         }
 
         public IEnumerable<IPhone> FilterPhoneByProducer(string producerName)
         {
-            return dao.GetAllPhones().Where(phone => phone.Producer.Name.Equals(producerName));
+            return _dao.GetAllPhones().Where(phone => phone.Producer.Name.Equals(producerName));
         }
 
         public IEnumerable<IPhone> FilterPhoneBySoftwareType(SoftwareType softwareType)
         {
-            return dao.GetAllPhones().Where(phone => phone.SoftwareType.Equals(softwareType));
+            return _dao.GetAllPhones().Where(phone => phone.SoftwareType.Equals(softwareType));
         }
 
+        public IEnumerable<IPhone> FilterPhoneByYear(int yearOfProduction)
+        {
+            return _dao.GetAllPhones().Where(phone => phone.YearOfProduction.Equals(yearOfProduction));
+        }
+        public IEnumerable<IProducer> FilterProducerByAddress(string address)
+        {
+            return _dao.GetAllProducers().Where(producer => producer.Address.Equals(address));
+        }
         public IEnumerable<IPhone> SearchPhoneByName(string phoneName)
         {
-            return dao.GetAllPhones().Where(phone => phone.Name.Contains(phoneName));
+            return _dao.GetAllPhones().Where(phone => phone.Name.ToLower().Contains(phoneName.ToLower()));
         }
 
         public IEnumerable<IProducer> SearchProducerByName(string producerName)
         {
-            return dao.GetAllProducers().Where(producer => producer.Name.Contains(producerName));
+            return _dao.GetAllProducers().Where(producer => producer.Name.ToLower().Contains(producerName.ToLower()));
+        }
+        public IEnumerable<string> GetUniqueAddresses()
+        {
+            return _dao.GetAllProducers().Select(producer => producer.Address).Distinct().ToList();
         }
 
-
+        public IEnumerable<string> GetUniqueYearsOfProduction()
+        {
+            return _dao.GetAllPhones().Select(phone => phone.YearOfProduction.ToString()).Distinct().ToList();
+        }
     }
 }
