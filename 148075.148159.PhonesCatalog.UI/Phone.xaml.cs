@@ -17,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace _148075._148159.PhonesCatalog.UI
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Phone.xaml
-    /// </summary>
+
     public partial class Phone : Window
     {
         public Phone(IEnumerable<string> producers)

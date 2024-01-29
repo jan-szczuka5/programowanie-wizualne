@@ -224,7 +224,7 @@ namespace _148075._148159.PhonesCatalog.DAOMock1
             int phoneIndex = phones.FindIndex(phone => phone.ID == phoneUpdated.ID);
             if (phoneIndex != -1)
             {
-                phones[phoneIndex] = phoneUpdated; // Maintain the existing ID
+                phones[phoneIndex] = phoneUpdated; 
             }
             else
             {

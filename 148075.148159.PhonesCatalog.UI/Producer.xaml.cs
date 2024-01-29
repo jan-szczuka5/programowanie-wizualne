@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace _148075._148159.PhonesCatalog.UI
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Producer.xaml
-    /// </summary>
     public partial class Producer : Window
     {
         public Producer()

@@ -36,17 +36,14 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
             }
             else if (!string.IsNullOrEmpty(searchTerm))
             {
-                // Perform search based on the name
                 producers = _blc.SearchProducerByName(searchTerm).ToList();
             }
             else if (!string.IsNullOrEmpty(filterByAddress))
             {
-                // Perform filtering based on the address
                 producers = _blc.FilterProducerByAddress(filterByAddress).ToList();
             }
             else if (string.IsNullOrEmpty(filterByAddress) && string.IsNullOrEmpty(searchTerm))
             {
-                // Get all producers
                 producers = _blc.GetProducers().ToList();
             }
             else 

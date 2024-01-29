@@ -19,9 +19,6 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace _148075._148159.PhonesCatalog.UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
@@ -53,21 +50,6 @@ namespace _148075._148159.PhonesCatalog.UI
                 ProducerList.Items.Add(producer);
             }
         }
-        /*        private void ApplyNewDataSource(object sender, RoutedEventArgs e)
-                {
-                    try
-                    {
-                        blc.LoadDatasource(datasource.Text);
-                        ProducerLVM.RefreshList(blc.GetProducers());
-                        PhoneLVM.RefreshList(blc.GetPhones());
-                        selectedDAOMock = datasource.Text;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        blc.LoadDatasource(selectedDAOMock);
-                    }
-                }*/
 
         #region Filters
         private void ApplyPhoneSearch(object sender, RoutedEventArgs e)
@@ -82,12 +64,7 @@ namespace _148075._148159.PhonesCatalog.UI
             }
 
             PhoneLVM.RefreshList(blc.SearchPhoneByName(filterValue));
-/*
-            if (PhoneList.Items.Count > 0)
-            {
-                PhoneList.SelectedItem = PhoneList.Items[0];
 
-            }*/
 
             PhoneList.Items.Clear();
             foreach (var phone in PhoneLVM.Phones)
@@ -109,11 +86,7 @@ namespace _148075._148159.PhonesCatalog.UI
 
             ProducerLVM.RefreshList(blc.SearchProducerByName(filterValue));
 
-            /*            if (ProducerList.Items.Count > 0)
-                        {
-                            ProducerList.SelectedItem = ProducerList.Items[0];
 
-                        }*/
 
             ProducerList.Items.Clear();
             foreach (var producer in ProducerLVM.Producers)
@@ -125,50 +98,36 @@ namespace _148075._148159.PhonesCatalog.UI
 
         private void ProducerApplyFilter(object sender, RoutedEventArgs e)
         {
-
-
-
-            // Retrieve the filter value entered by the user.
             string filterValue = producerFilterValueComboBox.SelectedItem as string;
 
             if (string.IsNullOrWhiteSpace(filterValue))
             {
-                // Handle the case where the filter value is empty, if necessary.
                 ProducerLVM.RefreshList(blc.GetProducers());
             }
             else
             {
                 FilterProducerByAddress(filterValue);
             }
-
-
-            
-
             
         }
 
 
         private void PhoneApplyFilter(object sender, RoutedEventArgs e)
         {
-            // First, determine the selected filter type from the ComboBox.
             var selectedFilter = filterTypeComboBox.SelectedItem as ComboBoxItem;
 
             if (selectedFilter == null)
             {
-                // Handle the case where no filter is selected, if necessary.
                 PhoneLVM.RefreshList(blc.GetPhones());
                 return;
             }
 
-            // Retrieve the filter value entered by the user.
             var filterValue = filterValueComboBox.SelectedItem as string;
 
             if (filterValue != null || string.IsNullOrWhiteSpace(filterValue))
             {
-                // Handle the case where the filter value is empty, if necessary.
             }
 
-            // Apply the filter based on the selected filter type.
             switch (selectedFilter.Content.ToString())
             {
                 case "software type":
@@ -305,10 +264,8 @@ namespace _148075._148159.PhonesCatalog.UI
         {
             ComboBox comboBox = (ComboBox)sender;
 
-            // Get the selected filter type
             string selectedFilter = (e.AddedItems[0] as ComboBoxItem)?.Content.ToString();
 
-            // Dynamically populate ComboBox based on the selected filter type
             switch (selectedFilter)
             {
                 case "producer name":
@@ -325,26 +282,22 @@ namespace _148075._148159.PhonesCatalog.UI
                     break;
             }
 
-            // Reset the selected item
             filterValueComboBox.SelectedItem = null;
         }
 
 
         private IEnumerable<string> GetProducerNames()
         {
-            // Implement your logic to get a list of producer names
             return blc.GetAllProducersNames();
         }
 
         private IEnumerable<string> GetYearsOfProduction()
         {
-            // Implement your logic to get a list of years of production
             return blc.GetPhones().Select(p => p.YearOfProduction.ToString()).Distinct();
         }
 
         private IEnumerable<string> GetSoftwares()
         {
-            // Implement your logic to get a list of years of production
             return blc.GetPhones().Select(p => p.SoftwareType.ToString()).Distinct();
         }
 
@@ -455,7 +408,7 @@ namespace _148075._148159.PhonesCatalog.UI
                 foreach (var phoneitem in PhoneLVM.Phones)
                 {
                     PhoneList.Items.Add(phoneitem);
-                }// Refresh the PhoneLVM after adding a new phone
+                }
             }
         }
 

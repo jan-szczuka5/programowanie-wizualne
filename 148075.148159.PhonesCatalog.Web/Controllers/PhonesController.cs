@@ -29,7 +29,6 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
 
             if (!string.IsNullOrEmpty(searchTerm) || !string.IsNullOrEmpty(filterByProducer) || filterBySoftwareType.HasValue || filterByYear.HasValue)
             {
-                // Apply all filters and intersect the results
                 phones = _blc.GetPhones();
 
                 if (!string.IsNullOrEmpty(searchTerm))
@@ -54,7 +53,6 @@ namespace _148075._148159.PhonesCatalog.Web.Controllers
             }
             else
             {
-                // Get all phones if no filters are applied
                 phones = _blc.GetPhones();
             }
 

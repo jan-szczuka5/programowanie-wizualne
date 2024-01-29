@@ -8,15 +8,9 @@
         Title="MainWindow" Height="450" Width="830">
     <TabControl>
         <TabItem Header="Phones">
-
-
             <DockPanel LastChildFill="True">
-
-                <!-- Filters/Search Section (Top) -->
                 <StackPanel DockPanel.Dock="Top" Margin="10,5,10,5">
-                    <!-- Filters/Search Section (Top) -->
                     <StackPanel DockPanel.Dock="Top" Margin="0" Orientation="Horizontal">
-                        <!-- Filter Section -->
                         <StackPanel Orientation="Horizontal" Margin="0,10">
                             <TextBlock Margin="5" Padding="2">Filter phones by:</TextBlock>
                             <ComboBox Margin="5" Padding="2" Name="filterTypeComboBox" MinWidth="100" SelectionChanged="FilterTypeComboBox_SelectionChanged">
@@ -27,8 +21,6 @@
                             <ComboBox Margin="5" Padding="2" Name="filterValueComboBox" MinWidth="100"/>
                             <Button Margin="5" Padding="2" Click="PhoneApplyFilter">Apply filter</Button>
                         </StackPanel>
-
-                        <!-- Search Section -->
                         <StackPanel Orientation="Horizontal" Margin="0,10">
                             <TextBlock Margin="5" Padding="2">Search phone by name:</TextBlock>
                             <TextBox Margin="5" Padding="2" Name="phoneSearchField" MinWidth="100"/>
@@ -38,10 +30,7 @@
                             <Button Margin="5" Padding="2" Click="RemoveFiltersPhone">Remove filters</Button>
                         </StackPanel>
                     </StackPanel>
-
                 </StackPanel>
-
-                <!-- ListView Section (Left) -->
                 <StackPanel DockPanel.Dock="Left" Margin="10">
                     <ListView Margin="0,5,0,10" Name="PhoneList" SelectionChanged="PhoneList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=PhoneLVM.Phones}" Height="249" Width="533">
                         <ListView.View>
@@ -64,8 +53,6 @@
                         </ListView.View>
                     </ListView>
                 </StackPanel>
-
-                <!-- Details Section (Right) -->
                 <StackPanel DockPanel.Dock="Right" Margin="10" Width="200">
                     <TextBlock>
                 <Run Text="ID: " FontWeight="Bold"/>
@@ -91,20 +78,14 @@
                 <Run Text="Producer name: " FontWeight="Bold"/>
                 <Run Text="{Binding PhoneProducer}"/>
                     </TextBlock>
-
                     <Button Margin="0,5,0,5" MaxWidth="160"  Click="EditPhone">Edit selected phone</Button>
                     <Button Margin="0,0,0,5" MaxWidth="160" Click="RemovePhone">Remove selected phone</Button>
                     <Button Margin="0,0,0,5" MaxWidth="160" Click="AddPhone">Add new phone</Button>
                 </StackPanel>
             </DockPanel>
         </TabItem>
-        <!-- Producers Tab -->
         <TabItem Header="Producers">
             <DockPanel LastChildFill="True">
-                <!-- Filters/Search Section (Top) for Producers -->
-
-
-
                 <StackPanel DockPanel.Dock="Top" Margin="0,10" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0,10">
                         <TextBlock Margin="5" Padding="2">Filter producers by address:</TextBlock>
@@ -120,8 +101,6 @@
                         <Button Margin="5" Padding="2" Click="RemoveFiltersProducer">Remove filters</Button>
                     </StackPanel>
                 </StackPanel>
-
-                <!-- ListView Section (Left) for Producers -->
                 <StackPanel DockPanel.Dock="Left" Margin="10">
                     <ListView Margin="0,5,0,10" Name="ProducerList" SelectionChanged="ProducerList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ElementName=Window, Path=ProducerLVM.Producers}" Height="249" Width="521" RenderTransformOrigin="0.5,0.5">
                         <ListView.RenderTransform>
@@ -152,8 +131,6 @@
                         </ListView.View>
                     </ListView>
                 </StackPanel>
-
-                <!-- Details Section (Right) for Producers -->
                 <StackPanel DockPanel.Dock="Right" Margin="10" Width="200" Height="221">
                     <TextBlock>
                 <Run Text="ID: " FontWeight="Bold"/>
@@ -167,7 +144,6 @@
                 <Run Text="Address: " FontWeight="Bold"/>
                 <Run Text="{Binding ProducerAddress}"/>
                     </TextBlock>
-
                     <Button Margin="0,5,0,5" Click="EditProducer">Edit selected producer</Button>
                     <Button Margin="0,0,0,5" Click="RemoveProducer">Remove selected producer</Button>
                     <Button Margin="0,0,0,5" Click="AddProducer">Add new producer</Button>
