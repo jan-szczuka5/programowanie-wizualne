@@ -5,13 +5,13 @@
 namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "PhonesRelation",
+                name: "Phones",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -25,11 +25,11 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhonesRelation", x => x.ID);
+                    table.PrimaryKey("PK_Phones", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProducersRelation",
+                name: "Producers",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -39,7 +39,7 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProducersRelation", x => x.ID);
+                    table.PrimaryKey("PK_Producers", x => x.ID);
                 });
         }
 
@@ -47,10 +47,10 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PhonesRelation");
+                name: "Phones");
 
             migrationBuilder.DropTable(
-                name: "ProducersRelation");
+                name: "Producers");
         }
     }
 }

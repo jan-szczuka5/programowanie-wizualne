@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using _148075._148159.PhonesCatalog.Interfaces;
 using Microsoft.Extensions.Configuration;
 
@@ -38,7 +33,20 @@ namespace _148075._148159.PhonesCatalog.DBSQL
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"data source={DbPath}");
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string projectRootDirectory = Directory.GetParent(currentDirectory)?.Parent?.Parent?.Parent?.FullName;
+
+            if (projectRootDirectory != null)
+            {
+
+                string dbFilePath = Path.Combine(projectRootDirectory, "phonescatalog.db");
+                options.UseSqlite($"Data Source={dbFilePath}");
+            }
+            else
+            {
+                throw new InvalidOperationException("Failed to determine the project's root directory.");
+            }
         }
 
 

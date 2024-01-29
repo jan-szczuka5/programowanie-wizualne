@@ -13,6 +13,8 @@ using _148075._148159.PhonesCatalog.Interfaces;
 using _148075._148159.PhonesCatalog.DAOMock1.BO;
 using _148075._148159.PhonesCatalog.DAOMock2;
 using _148075._148159.PhonesCatalog.BLC;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 
 
 namespace _148075._148159.PhonesCatalog.UI
@@ -23,6 +25,7 @@ namespace _148075._148159.PhonesCatalog.UI
     public partial class MainWindow : Window
     {
 
+
         public ViewModels.PhoneListViewModel PhoneLVM { get; } = new ViewModels.PhoneListViewModel();
         private ViewModels.PhoneViewModel selectedPhone = null;
 
@@ -31,7 +34,7 @@ namespace _148075._148159.PhonesCatalog.UI
 
         private readonly BLC.BLC blc;
 
-        private string selectedDAOMock = "148075.148159.PhonesCatalog.DAOMock1.dll";
+        private string selectedDAOMock = System.Configuration.ConfigurationManager.AppSettings["DAOLibraryName"]!;
 
 
         public MainWindow()
@@ -45,26 +48,26 @@ namespace _148075._148159.PhonesCatalog.UI
             {
                 PhoneList.Items.Add(phone);
             }
-            foreach(var producer in ProducerLVM.Producers)
+            foreach (var producer in ProducerLVM.Producers)
             {
                 ProducerList.Items.Add(producer);
             }
         }
-/*        private void ApplyNewDataSource(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                blc.LoadDatasource(datasource.Text);
-                ProducerLVM.RefreshList(blc.GetProducers());
-                PhoneLVM.RefreshList(blc.GetPhones());
-                selectedDAOMock = datasource.Text;
-            }
-            catch
-            {
-                MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                blc.LoadDatasource(selectedDAOMock);
-            }
-        }*/
+        /*        private void ApplyNewDataSource(object sender, RoutedEventArgs e)
+                {
+                    try
+                    {
+                        blc.LoadDatasource(datasource.Text);
+                        ProducerLVM.RefreshList(blc.GetProducers());
+                        PhoneLVM.RefreshList(blc.GetPhones());
+                        selectedDAOMock = datasource.Text;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error occurred, check your input values!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        blc.LoadDatasource(selectedDAOMock);
+                    }
+                }*/
 
         #region Filters
         private void ApplyPhoneSearch(object sender, RoutedEventArgs e)

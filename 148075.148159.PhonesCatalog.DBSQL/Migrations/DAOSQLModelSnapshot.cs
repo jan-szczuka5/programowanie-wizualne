@@ -14,7 +14,7 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
             modelBuilder.Entity("_148075._148159.PhonesCatalog.DBSQL.PhoneDBSQL", b =>
                 {
@@ -43,7 +43,7 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PhonesRelation");
+                    b.ToTable("Phones");
                 });
 
             modelBuilder.Entity("_148075._148159.PhonesCatalog.DBSQL.ProducerDBSQL", b =>
@@ -62,7 +62,7 @@ namespace _148075._148159.PhonesCatalog.DBSQL.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProducersRelation");
+                    b.ToTable("Producers");
                 });
 #pragma warning restore 612, 618
         }
